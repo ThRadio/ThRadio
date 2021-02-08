@@ -1,0 +1,7 @@
+/node_modules
+
+.nuxt
+.dockerignore
+Dockerfile
+docker-compose.sample.yaml
+Caddyfile.sample

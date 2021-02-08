@@ -1,0 +1,12 @@
+fm2.therhenals.com {
+    @radio {
+        path_regexp radio /radio/(.*)/(.*)$
+    }
+
+    route @radio {
+        rewrite /radio/{http.regexp.radio.1}/{http.regexp.radio.2} /{http.regexp.radio.2}
+        reverse_proxy stations:{http.regexp.radio.1}
+    }
+
+    reverse_proxy frontend:3000
+}
