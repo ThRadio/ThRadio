@@ -221,12 +221,12 @@ install() {
     fi
   fi
 
-  if [[ ! -f docker-compose.yml ]]; then
+  if [[ ! -f docker-compose.yaml ]]; then
     echo "Retrieving default docker-compose.yml file..."
     curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/docker-compose.sample.yaml -o docker-compose.yaml
   fi
 
-  if [[ ! -f docker-compose.yml ]]; then
+  if [[ ! -f Caddyfile ]]; then
     echo "Retrieving default Caddyfile file..."
     curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/Caddyfile.sample -o Caddyfile
   fi
