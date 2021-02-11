@@ -21,6 +21,15 @@
             </tr>
           </thead>
           <tbody>
+            <tr v-if="!stations.length">
+              <td>Not found</td>
+              <td>
+                <v-btn to="/stations/add" dark plain>
+                  <v-icon left>mdi-plus-circle</v-icon>
+                  Add new station
+                </v-btn>
+              </td>
+            </tr>
             <tr
               v-for="station in stations"
               :key="station._id"
@@ -50,6 +59,10 @@
         </template>
       </v-simple-table>
     </v-card>
+
+    <v-overlay :value="loading">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </div>
 </template>
 
@@ -62,14 +75,17 @@ import { Component, Vue } from 'nuxt-property-decorator'
   },
 })
 export default class HomePage extends Vue {
+  loading = false
   async asyncData({ $axios }: any) {
     const stations = await $axios.$get('/api/stations')
     return { stations }
   }
 
   async remove(id: string) {
+    this.loading = true
     await this.$axios.$delete(`/api/stations/${id}`)
-    this.$nuxt.refresh()
+    await this.$nuxt.refresh()
+    this.loading = false
   }
 
   go(id: string) {

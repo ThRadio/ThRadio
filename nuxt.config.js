@@ -2,7 +2,7 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: false,
+  ssr: true,
 
   // Telemetry nuxt
   telemetry: false,
@@ -23,7 +23,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: '~/plugins/vuelidate', mode: 'client' }],
+  plugins: [{ src: '~/plugins/vuelidate' }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -37,7 +37,13 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/axios', '@nuxtjs/pwa', '@nuxtjs/proxy'],
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/pwa',
+    '@nuxtjs/proxy',
+    'nuxt-clipboard',
+    '@nuxtjs/auth-next',
+  ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
@@ -47,7 +53,7 @@ export default {
   // Proxy
   proxy: {
     '/api/': {
-      target: 'http://backend:3010',
+      target: process.env.BACKEND || 'http://backend:3010',
       pathRewrite: { '^/api/': '' },
     },
   },
@@ -58,6 +64,8 @@ export default {
       lang: 'en',
     },
   },
+
+  loading: { color: '#fff' },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -80,6 +88,35 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: ['vuelidate'],
+    transpile: ['vuelidate', 'vuex-module-decorators'],
+  },
+  router: {
+    middleware: ['completed', 'auth'],
+  },
+  auth: {
+    strategies: {
+      local: {
+        scheme: 'refresh',
+        token: {
+          property: 'access_token',
+          maxAge: 900,
+        },
+        refreshToken: {
+          property: 'refresh_token',
+          data: 'refresh_token',
+          maxAge: 60 * 60 * 24 * 30,
+        },
+        user: {
+          property: false,
+          // autoFetch: true
+        },
+        endpoints: {
+          login: { url: '/api/auth/login', method: 'post' },
+          refresh: { url: '/api/auth/refresh', method: 'post' },
+          user: { url: '/api/auth/me', method: 'get' },
+        },
+        // autoLogout: false
+      },
+    },
   },
 }

@@ -38,6 +38,8 @@ services:
       - "3010:3010"
     depends_on:
       - stations
+    environment:
+      - JWT_SECRET
 
   stations:
     container_name: thradio_stations

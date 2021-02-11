@@ -1,7 +1,32 @@
 <template>
   <v-app dark>
     <v-navigation-drawer v-model="drawer" clipped fixed app>
-      <v-list shaped>
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="title">
+            {{ $auth.user.name }}
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            {{ $auth.user.email }}
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+      <div class="pa-2">
+        <v-btn
+          rounded
+          color="primary"
+          class="ma-0"
+          block
+          size="large"
+          @click="logout"
+        >
+          Log out
+        </v-btn>
+      </div>
+
+      <v-divider></v-divider>
+
+      <v-list nav dense>
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -9,9 +34,9 @@
           router
           exact
         >
-          <v-list-item-action>
+          <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
+          </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title v-text="item.title" />
           </v-list-item-content>
@@ -20,7 +45,7 @@
     </v-navigation-drawer>
     <v-app-bar clipped-left fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title>ThRadio</v-toolbar-title>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -47,10 +72,17 @@ export default class DefaultLayout extends Vue {
       icon: 'mdi-home',
       title: 'Home',
       to: '/',
-      auth: false,
+    },
+    {
+      icon: 'mdi-cog-outline',
+      title: 'Config',
+      to: '/config',
     },
   ]
 
-  title = 'ThRadio'
+  async logout() {
+    await this.$auth.logout()
+    this.$router.push('/login')
+  }
 }
 </script>

@@ -1,4 +1,4 @@
-fm2.therhenals.com {
+{$SITE_ADDRESS} {
     @radio {
         path_regexp radio /radio/(.*)/(.*)$
     }
