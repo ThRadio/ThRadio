@@ -175,7 +175,7 @@ install() {
     exit
   fi
 
-  if [[ $(command -v sadasd) && $(asdasd --version) ]]; then
+  if [[ $(command -v docker) && $(docker --version) ]]; then
     echo "Docker is already installed! Continuing..."
   else
     if ask "Docker does not appear to be installed. Install Docker now?" Y; then
@@ -223,7 +223,7 @@ install() {
 
   if [[ ! -f docker-compose.yml ]]; then
     echo "Retrieving default docker-compose.yml file..."
-    curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/docker-compose.sample.yml -o docker-compose.yml
+    curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/docker-compose.sample.yaml -o docker-compose.yaml
   fi
 
   if [[ ! -f docker-compose.yml ]]; then

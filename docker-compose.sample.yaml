@@ -43,7 +43,7 @@ services:
 
   stations:
     container_name: thradio_stations
-    image: therhenals/thradio_station
+    image: therhenals/thradio_stations
     volumes:
       - stations_data:/var/thradio/stations
     networks:

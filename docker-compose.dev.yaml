@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  frontend:
+    image: therhenals/thradio_frontend
+    build: .
+    ports:
+      - 3000:3000
+    volumes:
+      - stations_data:/backend/stations
+      - db_data:/backend/db
+    networks:
+      - frontend
+      - backend
+
+volumes:
+  stations_data:
+    name: thradio_stations_data
+  db_data:
+    name: thradio_db_data
+
+networks:
+  backend:
+    name: thradio_backend
+    driver: bridge
+  frontend:
+    name: thradio_frontend
+    driver: bridge
