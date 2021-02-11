@@ -14,6 +14,8 @@ services:
     networks:
       - frontend
       - backend
+    environment:
+      - SITE_ADDRESS
 
   frontend:
     container_name: thradio_frontend
