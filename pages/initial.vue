@@ -29,6 +29,14 @@
             @input="$v.config.urlBase.$touch()"
             @blur="$v.config.urlBase.$touch()"
           ></v-text-field>
+        </v-card-text>
+      </v-card>
+
+      <v-card class="mt-3">
+        <v-card-subtitle class="text-center">
+          <h3>Admin user</h3>
+        </v-card-subtitle>
+        <v-card-text>
           <v-text-field
             v-model="user.name"
             dense
@@ -57,16 +65,18 @@
             @input="$v.user.password.$touch()"
             @blur="$v.user.password.$touch()"
           ></v-text-field>
-          <v-btn
-            :disabled="$v.$invalid"
-            depressed
-            block
-            color="primary"
-            @click="save()"
-            >Save</v-btn
-          >
         </v-card-text>
       </v-card>
+
+      <v-btn
+        class="mt-3"
+        :disabled="$v.$invalid"
+        depressed
+        block
+        color="primary"
+        @click="save()"
+        >Save</v-btn
+      >
     </v-col>
 
     <v-overlay :value="loading">
@@ -100,6 +110,10 @@ export default class InitialPage extends Vue {
     password: '',
   }
 
+  mounted() {
+    this.config.urlBase = `${window.location.protocol}//${window.location.host}`
+  }
+
   @Validations()
   validations = {
     config: {
@@ -126,7 +140,8 @@ export default class InitialPage extends Vue {
         password: this.user.password,
       },
     })
-    this.$router.push('/')
+    await this.$store.dispatch('getConfig')
+    await this.$router.push('/login')
   }
 }
 </script>

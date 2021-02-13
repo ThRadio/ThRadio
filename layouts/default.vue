@@ -45,26 +45,26 @@
     </v-navigation-drawer>
     <v-app-bar clipped-left fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>ThRadio</v-toolbar-title>
+      <v-toolbar-title
+        >ThRadio - {{ $store.getters.config.name }}</v-toolbar-title
+      >
     </v-app-bar>
     <v-main>
       <v-container>
         <nuxt />
       </v-container>
     </v-main>
-    <v-footer padless app>
-      <v-col class="text-center" cols="12">
-        {{ new Date().getFullYear() }} —
-        <strong>Developed by TheRhenals</strong>
-      </v-col>
-    </v-footer>
+    <FooterComponent></FooterComponent>
   </v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import FooterComponent from '~/components/footer.vue'
 
-@Component
+@Component({
+  components: { FooterComponent },
+})
 export default class DefaultLayout extends Vue {
   drawer = null
   items = [

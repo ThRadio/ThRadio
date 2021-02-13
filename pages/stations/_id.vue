@@ -28,14 +28,109 @@
       <v-list two-line>
         <v-list-item>
           <v-list-item-icon>
-            <v-icon color="indigo"> mdi-lock-outline </v-icon>
+            <v-icon color="primary"> mdi-card-text </v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title>Source password</v-list-item-title>
+            <v-list-item-title>Description</v-list-item-title>
+            <v-list-item-subtitle>{{
+              station.description
+            }}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon color="primary"> mdi-format-list-bulleted-type </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Genre</v-list-item-title>
+            <v-list-item-subtitle>{{ station.genre }}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon color="primary"> mdi-radio </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Maximum listeners</v-list-item-title>
+            <v-list-item-subtitle>{{ station.listeners }}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-card>
+
+    <v-card class="mt-3">
+      <v-card-title primary-title> Icecast connection </v-card-title>
+      <v-list two-line>
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon color="primary"> mdi-link-box-variant </v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Host URL</v-list-item-title>
+            <v-list-item-subtitle
+              >{{ $store.getters.config.url_base }}:{{
+                station.icecast_port
+              }}</v-list-item-subtitle
+            >
+          </v-list-item-content>
+
+          <v-list-item-icon
+            @click="
+              copy(`${$store.getters.config.url_base}:${station.icecast_port}`)
+            "
+          >
+            <v-icon>mdi-clipboard-text-multiple</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon color="primary"> mdi-open-in-new </v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Administration URL</v-list-item-title>
+            <v-list-item-subtitle
+              >{{ $store.getters.config.url_base }}:{{
+                station.icecast_port
+              }}/admin.html</v-list-item-subtitle
+            >
+          </v-list-item-content>
+
+          <v-list-item-icon
+            @click="
+              copy(
+                `${$store.getters.config.url_base}:${station.icecast_port}/admin.html`
+              )
+            "
+          >
+            <v-icon>mdi-clipboard-text-multiple</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon color="primary"> mdi-lock-outline </v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Administrator password</v-list-item-title>
             <v-list-item-subtitle>{{
               station.icecast_password
             }}</v-list-item-subtitle>
           </v-list-item-content>
+
           <v-list-item-icon @click="copy(station.icecast_password)">
             <v-icon>mdi-clipboard-text-multiple</v-icon>
           </v-list-item-icon>
@@ -45,7 +140,7 @@
 
         <v-list-item>
           <v-list-item-icon>
-            <v-icon color="indigo"> mdi-lock-outline </v-icon>
+            <v-icon color="primary"> mdi-lock-outline </v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
@@ -64,45 +159,7 @@
 
         <v-list-item>
           <v-list-item-icon>
-            <v-icon color="indigo"> mdi-lock-outline </v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>Source password</v-list-item-title>
-            <v-list-item-subtitle>{{
-              station.icecast_password
-            }}</v-list-item-subtitle>
-          </v-list-item-content>
-
-          <v-list-item-icon @click="copy(station.icecast_password)">
-            <v-icon>mdi-clipboard-text-multiple</v-icon>
-          </v-list-item-icon>
-        </v-list-item>
-
-        <v-divider></v-divider>
-
-        <v-list-item>
-          <v-list-item-icon>
-            <v-icon color="indigo"> mdi-lock-outline </v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>Source password</v-list-item-title>
-            <v-list-item-subtitle>{{
-              station.icecast_password
-            }}</v-list-item-subtitle>
-          </v-list-item-content>
-
-          <v-list-item-icon @click="copy(station.icecast_password)">
-            <v-icon>mdi-clipboard-text-multiple</v-icon>
-          </v-list-item-icon>
-        </v-list-item>
-
-        <v-divider></v-divider>
-
-        <v-list-item>
-          <v-list-item-icon>
-            <v-icon color="indigo"> mdi-airplane </v-icon>
+            <v-icon color="primary"> mdi-airplane </v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title>Port</v-list-item-title>
@@ -111,6 +168,23 @@
             }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-icon @click="copy(station.icecast_port)">
+            <v-icon>mdi-clipboard-text-multiple</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon color="primary"> mdi-radio-tower </v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Mount point</v-list-item-title>
+            <v-list-item-subtitle>/radio.mp3</v-list-item-subtitle>
+          </v-list-item-content>
+
+          <v-list-item-icon @click="copy('/radio.mp3')">
             <v-icon>mdi-clipboard-text-multiple</v-icon>
           </v-list-item-icon>
         </v-list-item>

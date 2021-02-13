@@ -200,7 +200,7 @@ install() {
     echo "Docker Compose is already installed! Continuing..."
   else
     if ask "Docker Compose does not appear to be installed. Install Docker Compose now?" Y; then
-      local COMPOSE_VERSION=1.25.3
+      local COMPOSE_VERSION=1.28.2
 
       if [[ $EUID -ne 0 ]]; then
         if [[ ! $(command -v sudo) ]]; then
@@ -222,7 +222,7 @@ install() {
   fi
 
   if [[ ! -f docker-compose.yaml ]]; then
-    echo "Retrieving default docker-compose.yml file..."
+    echo "Retrieving default docker-compose.yaml file..."
     curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/docker-compose.sample.yaml -o docker-compose.yaml
   fi
 
@@ -247,6 +247,100 @@ install() {
 
   docker-compose pull
   docker-compose up -d
+  exit
+}
+
+update() {
+  # Check for a new Docker Utility Script.
+  curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/thradio.sh -o thradio.new.sh
+
+  local UTILITY_FILES_MATCH
+  UTILITY_FILES_MATCH="$(
+    cmp --silent thradio.sh thradio.new.sh
+    echo $?
+  )"
+  local UPDATE_UTILITY=0
+
+  if [[ ${UTILITY_FILES_MATCH} -ne 0 ]]; then
+    if ask "The Docker Utility Script has changed since your version. Update to latest version?" Y; then
+      UPDATE_UTILITY=1
+    fi
+  fi
+
+  if [[ ${UPDATE_UTILITY} -ne 0 ]]; then
+    mv thradio.new.sh thradio.sh
+    chmod a+x thradio.sh
+
+    echo "A new Docker Utility Script has been downloaded."
+    echo "Please re-run the update process to continue."
+    exit
+  else
+    rm thradio.new.sh
+  fi
+
+  if [[ ! -f .env ]]; then
+    curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/sample.env -o .env
+    echo "Default environment file loaded."
+  fi
+
+  curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/docker-compose.sample.yaml -o docker-compose.new.yaml
+
+  # Check for updated Docker Compose config.
+  local COMPOSE_FILES_MATCH
+  COMPOSE_FILES_MATCH="$(
+    cmp --silent docker-compose.yaml docker-compose.new.yaml
+    echo $?
+  )"
+  local UPDATE_COMPOSE=0
+
+  if [[ ${COMPOSE_FILES_MATCH} -ne 0 ]]; then
+    if ask "The docker-compose.yaml file has changed since your version. Overwrite? This will overwrite any customizations you made to this file?" Y; then
+      UPDATE_COMPOSE=1
+    fi
+  fi
+
+  if [[ ${UPDATE_COMPOSE} -ne 0 ]]; then
+    docker-compose -f docker-compose.new.yaml pull
+    docker-compose down
+
+    cp docker-compose.yaml docker-compose.backup.yaml
+    mv docker-compose.new.yaml docker-compose.yaml
+  else
+    rm docker-compose.new.yaml
+
+    docker-compose pull
+    docker-compose down
+  fi
+
+  curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/Caddyfile.sample -o Caddyfile.new
+
+  # Check for updated Caddyfile.
+  local CADDY_FILES_MATCH
+  CADDY_FILES_MATCH="$(
+    cmp --silent Caddyfile Caddyfile.new
+    echo $?
+  )"
+  local UPDATE_CADDY=0
+
+  if [[ ${CADDY_FILES_MATCH} -ne 0 ]]; then
+    if ask "The Caddyfile has changed since your version. Overwrite? This will overwrite any customizations you made to this file?" Y; then
+      UPDATE_CADDY=1
+    fi
+  fi
+
+  if [[ ${UPDATE_CADDY} -ne 0 ]]; then
+    mv Caddyfile.new Caddyfile
+  else
+    rm Caddyfile.new
+  fi
+
+  docker-compose up -d
+
+  if ask "Clean up all stopped Docker containers and images to save space?" Y; then
+    docker system prune -f
+  fi
+
+  echo "Update complete!"
   exit
 }
 

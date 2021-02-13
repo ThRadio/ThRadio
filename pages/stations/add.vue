@@ -24,6 +24,17 @@
         ></v-textarea>
 
         <v-text-field
+          v-model="genre"
+          outlined
+          dense
+          block
+          label="Genre"
+          hint="Optional"
+          @input="$v.genre.$touch()"
+          @blur="$v.genre.$touch()"
+        ></v-text-field>
+
+        <v-text-field
           v-model="icecastPassword"
           dense
           label="Password icecast"
@@ -41,6 +52,17 @@
           block
           @input="$v.icecastPort.$touch()"
           @blur="$v.icecastPort.$touch()"
+        ></v-text-field>
+
+        <v-text-field
+          v-model="listeners"
+          outlined
+          dense
+          block
+          label="Maximum listeners"
+          hint="Optional (Default 250)"
+          @input="$v.genre.$touch()"
+          @blur="$v.genre.$touch()"
         ></v-text-field>
 
         <v-btn
@@ -77,16 +99,20 @@ import { required, numeric } from 'vuelidate/lib/validators'
 export default class EditPage extends Vue {
   name: string = ''
   description: string = ''
+  genre: string = ''
   icecastPassword: string = ''
   icecastPort: string = ''
+  listeners: string = ''
   loading = false
 
   @Validations()
   validations = {
     name: { required },
     description: {},
+    genre: {},
     icecastPassword: { required },
     icecastPort: { required, numeric },
+    listeners: { numeric },
   }
 
   async add() {
@@ -94,8 +120,10 @@ export default class EditPage extends Vue {
     const station = await this.$axios.$post('/api/stations', {
       name: this.name,
       description: this.description,
+      genre: this.genre,
       icecast_password: this.icecastPassword,
       icecast_port: Number(this.icecastPort),
+      listeners: Number(this.listeners),
     })
     this.$router.push(`/stations/${station._id}`)
   }

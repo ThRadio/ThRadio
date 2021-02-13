@@ -31,6 +31,17 @@
         ></v-textarea>
 
         <v-text-field
+          v-model="genre"
+          outlined
+          dense
+          block
+          label="Genre"
+          hint="Optional"
+          @input="$v.genre.$touch()"
+          @blur="$v.genre.$touch()"
+        ></v-text-field>
+
+        <v-text-field
           v-model="icecastPassword"
           dense
           label="Password icecast"
@@ -48,6 +59,17 @@
           block
           @input="$v.icecastPort.$touch()"
           @blur="$v.icecastPort.$touch()"
+        ></v-text-field>
+
+        <v-text-field
+          v-model="listeners"
+          outlined
+          dense
+          block
+          label="Maximum listeners"
+          hint="Optional (Default 250)"
+          @input="$v.genre.$touch()"
+          @blur="$v.genre.$touch()"
         ></v-text-field>
 
         <v-btn
@@ -84,6 +106,8 @@ export default class EditPage extends Vue {
   station: any
   name: string = ''
   description: string = ''
+  genre: string = ''
+  listeners: string = ''
   icecastPassword: string = ''
   icecastPort: string = ''
   loading = false
@@ -92,6 +116,8 @@ export default class EditPage extends Vue {
   validations = {
     name: { required },
     description: {},
+    genre: { numeric },
+    listeners: {},
     icecastPassword: { required },
     icecastPort: { required, numeric },
   }
@@ -104,6 +130,8 @@ export default class EditPage extends Vue {
   mounted() {
     this.name = this.station.name
     this.description = this.station.description
+    this.genre = this.station.genre
+    this.listeners = this.station.listeners
     this.icecastPassword = this.station.icecast_password
     this.icecastPort = this.station.icecast_port
   }
@@ -113,8 +141,10 @@ export default class EditPage extends Vue {
     await this.$axios.$put(`/api/stations/${this.$route.params.id}`, {
       name: this.name,
       description: this.description,
+      genre: this.genre,
       icecast_password: this.icecastPassword,
       icecast_port: Number(this.icecastPort),
+      listeners: Number(this.listeners),
     })
     this.$router.push(`/stations/${this.$route.params.id}`)
   }

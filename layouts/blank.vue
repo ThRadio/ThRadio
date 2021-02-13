@@ -5,18 +5,15 @@
         <nuxt />
       </v-container>
     </v-main>
-    <v-footer padless app>
-      <v-col class="text-center" cols="12">
-        {{ new Date().getFullYear() }} —
-        <strong>Developed by TheRhenals</strong>
-      </v-col>
-    </v-footer>
+    <FooterComponent></FooterComponent>
   </v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-
-@Component
+import FooterComponent from '~/components/footer.vue'
+@Component({
+  components: { FooterComponent },
+})
 export default class BlankLayout extends Vue {}
 </script>

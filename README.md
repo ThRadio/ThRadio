@@ -4,6 +4,12 @@
 
 For this project the main language is Typescript all running on nodejs.
 
+## Support ThRadio Development
+
+ThRadio will always be available free of charge, but if you find the software useful and would like to support the project's lead developer, visit either of the links below. Your support is greatly appreciated.
+
+<a href="https://ko-fi.com/therhenals" target="_blank" title="Buy me a coffee!"><img height='50' style='border:0px;height:50px;' src='https://az743702.vo.msecnd.net/cdn/kofi1.png?v=b' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
 ## Install
 
 ThRadio is powered by Docker and uses pre-built images that contain every component of the software
@@ -22,6 +28,10 @@ $ ./thradio.sh install
 ```
 
 **ThRadio is currently in alpha.** If you use it in production, it is at your own risk.
+
+## Licence
+
+ThRadio is licensed under the Apache license, version 2.0. This project is free and open-source software, and pull requests are always welcome.
 
 <!-- ## Dev Setup
 
