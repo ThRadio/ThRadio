@@ -8,7 +8,7 @@ For this project the main language is Typescript all running on nodejs.
 
 ThRadio will always be available free of charge, but if you find the software useful and would like to support the project's lead developer, visit either of the links below. Your support is greatly appreciated.
 
-<a href="https://ko-fi.com/therhenals" target="_blank" title="Buy me a coffee!"><img height='50' style='border:0px;height:50px;' src='https://az743702.vo.msecnd.net/cdn/kofi1.png?v=b' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/therhenals)
 
 ## Install
 
