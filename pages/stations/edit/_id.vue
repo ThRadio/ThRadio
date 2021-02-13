@@ -68,8 +68,8 @@
           block
           label="Maximum listeners"
           hint="Optional (Default 250)"
-          @input="$v.genre.$touch()"
-          @blur="$v.genre.$touch()"
+          @input="$v.listeners.$touch()"
+          @blur="$v.listeners.$touch()"
         ></v-text-field>
 
         <v-btn
@@ -144,7 +144,7 @@ export default class EditPage extends Vue {
       genre: this.genre,
       icecast_password: this.icecastPassword,
       icecast_port: Number(this.icecastPort),
-      listeners: Number(this.listeners),
+      listeners: this.listeners !== '0' ? Number(this.listeners) : 250,
     })
     this.$router.push(`/stations/${this.$route.params.id}`)
   }

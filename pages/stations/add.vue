@@ -123,7 +123,7 @@ export default class EditPage extends Vue {
       genre: this.genre,
       icecast_password: this.icecastPassword,
       icecast_port: Number(this.icecastPort),
-      listeners: Number(this.listeners),
+      listeners: this.listeners !== '0' ? Number(this.listeners) : 250,
     })
     this.$router.push(`/stations/${station._id}`)
   }
