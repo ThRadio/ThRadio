@@ -16,6 +16,7 @@ services:
       - backend
     environment:
       - SITE_ADDRESS
+    restart: always
 
   frontend:
     container_name: thradio_frontend
@@ -27,6 +28,7 @@ services:
       - "3000:3000"
     depends_on:
       - backend
+    restart: always
 
   backend:
     container_name: thradio_backend
@@ -42,6 +44,7 @@ services:
       - stations
     environment:
       - JWT_SECRET
+    restart: always
 
   stations:
     container_name: thradio_stations
@@ -199,6 +202,7 @@ services:
       - "8490:8490"
       - "8495:8495"
       - "8496:8496"
+    restart: always
 
 networks:
   frontend:
