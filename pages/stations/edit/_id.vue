@@ -116,8 +116,8 @@ export default class EditPage extends Vue {
   validations = {
     name: { required },
     description: {},
-    genre: { numeric },
-    listeners: {},
+    genre: {},
+    listeners: { numeric },
     icecastPassword: { required },
     icecastPort: { required, numeric },
   }
