@@ -50,6 +50,10 @@ export default {
     proxy: true,
   },
 
+  publicRuntimeConfig: {
+    version: process.env.npm_package_version,
+  },
+
   // Proxy
   proxy: {
     '/api/': {

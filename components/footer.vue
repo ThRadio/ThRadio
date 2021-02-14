@@ -1,7 +1,7 @@
 <template>
   <v-footer padless app>
     <v-col class="text-center" cols="12" @click="go">
-      {{ new Date().getFullYear() }} —
+      ThRadio (v{{ $config.version }}) —
       <strong>Developed by TheRhenals</strong>
     </v-col>
   </v-footer>
