@@ -84,9 +84,12 @@ export default class ConfigPage extends Vue {
   async update() {
     try {
       this.loading = true
-      await this.$axios.$put('config')
+      await this.$axios.$put('/api/app/config', {
+        name: this.name,
+        url_base: this.urlBase,
+      })
       this.loading = false
-      this.$nuxt.refresh()
+      await this.$store.dispatch('getConfig')
       this.snackbar.show = true
       this.snackbar.text = 'Successfully update'
     } catch (err) {
