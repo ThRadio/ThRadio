@@ -10,6 +10,8 @@ ThRadio will always be available free of charge, but if you find the software us
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/therhenals)
 
+[![buymeacoffee](https://img.buymeacoffee.com/button-api/?slug=therhenals&button_colour=FFDD00&font_colour=000000&font_family=Poppins&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/therhenals)
+
 ## Install
 
 ThRadio is powered by Docker and uses pre-built images that contain every component of the software
