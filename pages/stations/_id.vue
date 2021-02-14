@@ -26,7 +26,7 @@
         </v-menu>
       </v-app-bar>
       <v-list two-line>
-        <v-list-item>
+        <v-list-item v-if="station.description">
           <v-list-item-icon>
             <v-icon color="primary"> mdi-card-text </v-icon>
           </v-list-item-icon>
@@ -40,7 +40,7 @@
 
         <v-divider></v-divider>
 
-        <v-list-item>
+        <v-list-item v-if="station.genre">
           <v-list-item-icon>
             <v-icon color="primary"> mdi-format-list-bulleted-type </v-icon>
           </v-list-item-icon>
