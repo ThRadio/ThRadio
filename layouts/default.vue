@@ -14,9 +14,10 @@
       <div class="pa-2">
         <v-btn
           rounded
-          color="primary"
+          color="red"
           class="ma-0"
           block
+          small
           size="large"
           @click="logout"
         >
