@@ -18,6 +18,10 @@ These are the changes that will be incorporated in the new version
 
 - Player added
 
+- Redesigned add station page
+
+- Redesigned edit station page
+
 ## Bug Fixes
 
 - Fixed the configuration update form

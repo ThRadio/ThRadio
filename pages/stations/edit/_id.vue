@@ -1,6 +1,6 @@
 <template>
-  <div class="EditPage">
-    <v-card>
+  <div class="EditStationPage">
+    <v-stepper v-model="step">
       <v-app-bar flat color="rgba(0, 0, 0, 0)">
         <v-btn :to="`/stations/${station._id}`" icon>
           <v-icon>mdi-arrow-left</v-icon>
@@ -9,81 +9,120 @@
           Edit station
         </v-toolbar-title>
       </v-app-bar>
-      <v-card-text>
-        <v-text-field
-          v-model="name"
-          dense
-          label="Name"
-          outlined
-          block
-          @input="$v.name.$touch()"
-          @blur="$v.name.$touch()"
-        ></v-text-field>
 
-        <v-textarea
-          v-model="description"
-          outlined
-          dense
-          label="Description"
-          hint="Optional"
-          @input="$v.description.$touch()"
-          @blur="$v.description.$touch()"
-        ></v-textarea>
+      <v-divider></v-divider>
 
-        <v-text-field
-          v-model="genre"
-          outlined
-          dense
-          block
-          label="Genre"
-          hint="Optional"
-          @input="$v.genre.$touch()"
-          @blur="$v.genre.$touch()"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="icecastPassword"
-          dense
-          label="Password icecast"
-          outlined
-          block
-          @input="$v.icecastPassword.$touch()"
-          @blur="$v.icecastPassword.$touch()"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="icecastPort"
-          dense
-          label="Port icecast"
-          outlined
-          block
-          @input="$v.icecastPort.$touch()"
-          @blur="$v.icecastPort.$touch()"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="listeners"
-          outlined
-          dense
-          block
-          label="Maximum listeners"
-          hint="Optional (Default 250)"
-          @input="$v.listeners.$touch()"
-          @blur="$v.listeners.$touch()"
-        ></v-text-field>
-
-        <v-btn
-          :disabled="$v.$invalid"
-          depressed
-          block
-          color="primary"
-          @click="edit()"
+      <v-stepper-header>
+        <v-stepper-step
+          :rules="[() => !$v.information.$invalid]"
+          editable
+          :complete="!$v.icecast.$invalid"
+          step="1"
         >
-          <v-icon left>mdi-pencil</v-icon>
-          Edit station
-        </v-btn>
-      </v-card-text>
-    </v-card>
+          Information
+          <small v-if="$v.information.$invalid">Incomplete</small>
+        </v-stepper-step>
+
+        <v-divider></v-divider>
+
+        <v-stepper-step
+          :rules="[() => !$v.icecast.$invalid]"
+          editable
+          :complete="!$v.icecast.$invalid"
+          step="2"
+        >
+          Icecast
+          <small v-if="$v.icecast.$invalid">Incomplete</small>
+        </v-stepper-step>
+      </v-stepper-header>
+
+      <v-stepper-items>
+        <v-stepper-content step="1">
+          <v-card flat color="transparent" class="mb-4">
+            <v-card-text class="pa-0 pt-2">
+              <v-text-field
+                v-model="information.name"
+                dense
+                label="Name"
+                outlined
+                block
+                @input="$v.information.name.$touch()"
+                @blur="$v.information.name.$touch()"
+              ></v-text-field>
+
+              <v-textarea
+                v-model="information.description"
+                outlined
+                dense
+                label="Description"
+                hint="Optional"
+                @input="$v.information.description.$touch()"
+                @blur="$v.information.description.$touch()"
+              ></v-textarea>
+
+              <v-text-field
+                v-model="information.genre"
+                outlined
+                dense
+                block
+                label="Genre"
+                hint="Optional"
+                @input="$v.information.genre.$touch()"
+                @blur="$v.information.genre.$touch()"
+              ></v-text-field>
+            </v-card-text>
+          </v-card>
+        </v-stepper-content>
+
+        <v-stepper-content step="2">
+          <v-card flat color="transparent" class="mb-4">
+            <v-card-text class="pa-0 pt-2">
+              <v-text-field
+                v-model="icecast.password"
+                dense
+                label="Password icecast"
+                outlined
+                block
+                @input="$v.icecast.password.$touch()"
+                @blur="$v.icecast.password.$touch()"
+              ></v-text-field>
+
+              <v-text-field
+                v-model="icecast.port"
+                dense
+                label="Port icecast"
+                outlined
+                block
+                @input="$v.icecast.port.$touch()"
+                @blur="$v.icecast.port.$touch()"
+              ></v-text-field>
+
+              <v-text-field
+                v-model="icecast.listeners"
+                outlined
+                dense
+                block
+                label="Maximum listeners"
+                hint="Optional (Default 250)"
+                @input="$v.icecast.listeners.$touch()"
+                @blur="$v.icecast.listeners.$touch()"
+              ></v-text-field>
+            </v-card-text>
+          </v-card>
+        </v-stepper-content>
+      </v-stepper-items>
+    </v-stepper>
+
+    <v-btn
+      class="mt-3"
+      block
+      color="primary"
+      :disabled="$v.$invalid"
+      @click="edit"
+    >
+      <v-icon left>mdi-pencil</v-icon>
+      Edit station
+    </v-btn>
 
     <v-overlay :value="loading">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
@@ -97,30 +136,39 @@
   import { required, numeric } from 'vuelidate/lib/validators'
 
   @Component({
-    head(this: EditPage): object {
+    head(this: EditStationPage): object {
       return {
         title: `Edit ${this.station.name}`,
       }
     },
   })
-  export default class EditPage extends Vue {
+  export default class EditStationPage extends Vue {
     station: any
-    name: string = ''
-    description: string = ''
-    genre: string = ''
-    listeners: string = ''
-    icecastPassword: string = ''
-    icecastPort: string = ''
+    step = 1
+    information = {
+      name: '',
+      description: '',
+      genre: '',
+    }
+    icecast = {
+      password: '',
+      port: '',
+      listeners: '',
+    }
     loading = false
 
     @Validations()
     validations = {
-      name: { required },
-      description: {},
-      genre: {},
-      listeners: { numeric },
-      icecastPassword: { required },
-      icecastPort: { required, numeric },
+      information: {
+        name: { required },
+        description: {},
+        genre: {},
+      },
+      icecast: {
+        password: { required },
+        port: { required, numeric },
+        listeners: { numeric },
+      },
     }
 
     async asyncData({ $axios, params }: any) {
@@ -129,23 +177,28 @@
     }
 
     mounted() {
-      this.name = this.station.name
-      this.description = this.station.description
-      this.genre = this.station.genre
-      this.listeners = this.station.listeners
-      this.icecastPassword = this.station.icecast_password
-      this.icecastPort = this.station.icecast_port
+      this.information = {
+        name: this.station.name,
+        description: this.station.description,
+        genre: this.station.genre,
+      }
+      this.icecast = {
+        listeners: this.station.listeners,
+        password: this.station.icecast_password,
+        port: this.station.icecast_port,
+      }
     }
 
     async edit() {
       this.loading = true
       await this.$axios.$put(`/api/stations/${this.$route.params.id}`, {
-        name: this.name,
-        description: this.description,
-        genre: this.genre,
-        icecast_password: this.icecastPassword,
-        icecast_port: Number(this.icecastPort),
-        listeners: this.listeners !== '0' ? Number(this.listeners) : 250,
+        name: this.information.name,
+        description: this.information.description,
+        genre: this.information.genre,
+        icecast_password: this.icecast.password,
+        icecast_port: Number(this.icecast.port),
+        listeners:
+          this.icecast.listeners !== '' ? Number(this.icecast.listeners) : 250,
       })
       this.$router.push(`/stations/${this.$route.params.id}`)
     }
