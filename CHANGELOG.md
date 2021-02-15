@@ -10,8 +10,12 @@ These are the changes that will be incorporated in the new version
 
 - Icons added to all buttons
 
+- Redesigned inital page using stepper
+
 ## Bug Fixes
 
 - Fixed the configuration update form
 
 - Hide gender and description if not added
+
+- Fixed initial page middleware

@@ -112,6 +112,7 @@
   import { required, email } from 'vuelidate/lib/validators'
 
   @Component({
+    auth: 'guest',
     layout: 'blank',
     head: {
       title: 'Initial',
