@@ -66,7 +66,7 @@
                   </v-list-item-content>
                 </v-list-item>
 
-                <v-divider></v-divider>
+                <v-divider v-if="station.description"></v-divider>
 
                 <v-list-item v-if="station.genre">
                   <v-list-item-icon>
@@ -82,7 +82,7 @@
                   </v-list-item-content>
                 </v-list-item>
 
-                <v-divider></v-divider>
+                <v-divider v-if="station.genre"></v-divider>
 
                 <v-list-item>
                   <v-list-item-icon>
