@@ -75,8 +75,10 @@
         block
         color="primary"
         @click="save()"
-        >Save</v-btn
       >
+        <v-icon left>mdi-radio</v-icon>
+        Save
+      </v-btn>
     </v-col>
 
     <v-overlay :value="loading">
@@ -86,62 +88,62 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import { Validations } from 'vuelidate-property-decorators'
-import { required } from 'vuelidate/lib/validators'
+  import { Component, Vue } from 'nuxt-property-decorator'
+  import { Validations } from 'vuelidate-property-decorators'
+  import { required } from 'vuelidate/lib/validators'
 
-@Component({
-  auth: 'guest',
-  layout: 'blank',
-  head: {
-    title: 'Initial',
-  },
-})
-export default class InitialPage extends Vue {
-  loading = false
-  config = {
-    name: '',
-    urlBase: '',
-  }
-
-  user = {
-    name: '',
-    email: '',
-    password: '',
-  }
-
-  mounted() {
-    this.config.urlBase = `${window.location.protocol}//${window.location.host}`
-  }
-
-  @Validations()
-  validations = {
-    config: {
-      name: { required },
-      urlBase: { required },
+  @Component({
+    auth: 'guest',
+    layout: 'blank',
+    head: {
+      title: 'Initial',
     },
-    user: {
-      name: { required },
-      email: { required },
-      password: { required },
-    },
-  }
+  })
+  export default class InitialPage extends Vue {
+    loading = false
+    config = {
+      name: '',
+      urlBase: '',
+    }
 
-  async save() {
-    this.loading = true
-    await this.$axios.$post('/api/app/initial', {
+    user = {
+      name: '',
+      email: '',
+      password: '',
+    }
+
+    mounted() {
+      this.config.urlBase = `${window.location.protocol}//${window.location.host}`
+    }
+
+    @Validations()
+    validations = {
       config: {
-        name: this.config.name,
-        url_base: this.config.urlBase,
+        name: { required },
+        urlBase: { required },
       },
       user: {
-        name: this.user.name,
-        email: this.user.email,
-        password: this.user.password,
+        name: { required },
+        email: { required },
+        password: { required },
       },
-    })
-    await this.$store.dispatch('getConfig')
-    await this.$router.push('/login')
+    }
+
+    async save() {
+      this.loading = true
+      await this.$axios.$post('/api/app/initial', {
+        config: {
+          name: this.config.name,
+          url_base: this.config.urlBase,
+        },
+        user: {
+          name: this.user.name,
+          email: this.user.email,
+          password: this.user.password,
+        },
+      })
+      await this.$store.dispatch('getConfig')
+      await this.$router.push('/login')
+    }
   }
-}
 </script>

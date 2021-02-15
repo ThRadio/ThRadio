@@ -19,9 +19,15 @@
 
               <v-list>
                 <v-list-item :to="`/stations/edit/${station._id}`">
+                  <v-list-item-icon>
+                    <v-icon dense> mdi-pencil </v-icon>
+                  </v-list-item-icon>
                   <v-list-item-title>Edit</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="remove">
+                  <v-list-item-icon>
+                    <v-icon dense> mdi-delete </v-icon>
+                  </v-list-item-icon>
                   <v-list-item-title>Remove</v-list-item-title>
                 </v-list-item>
               </v-list>
@@ -90,12 +96,21 @@
 
               <v-list>
                 <v-list-item @click="start" v-if="station.state == 0">
+                  <v-list-item-icon>
+                    <v-icon dense> mdi-play-circle-outline </v-icon>
+                  </v-list-item-icon>
                   <v-list-item-title>Start</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="restart" v-if="station.state == 20">
+                  <v-list-item-icon>
+                    <v-icon dense> mdi-restart </v-icon>
+                  </v-list-item-icon>
                   <v-list-item-title>Restart</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="stop" v-if="station.state == 20">
+                  <v-list-item-icon>
+                    <v-icon dense> mdi-stop-circle-outline </v-icon>
+                  </v-list-item-icon>
                   <v-list-item-title>Stop</v-list-item-title>
                 </v-list-item>
               </v-list>

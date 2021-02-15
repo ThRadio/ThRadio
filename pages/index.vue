@@ -46,9 +46,15 @@
 
                   <v-list>
                     <v-list-item :to="`/stations/edit/${station._id}`">
+                      <v-list-item-icon>
+                        <v-icon dense> mdi-pencil </v-icon>
+                      </v-list-item-icon>
                       <v-list-item-title>Edit</v-list-item-title>
                     </v-list-item>
                     <v-list-item @click="remove(station._id)">
+                      <v-list-item-icon>
+                        <v-icon dense> mdi-delete </v-icon>
+                      </v-list-item-icon>
                       <v-list-item-title>Remove</v-list-item-title>
                     </v-list-item>
                   </v-list>
@@ -67,29 +73,29 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+  import { Component, Vue } from 'nuxt-property-decorator'
 
-@Component({
-  head: {
-    title: 'Home',
-  },
-})
-export default class HomePage extends Vue {
-  loading = false
-  async asyncData({ $axios }: any) {
-    const stations = await $axios.$get('/api/stations')
-    return { stations }
-  }
+  @Component({
+    head: {
+      title: 'Home',
+    },
+  })
+  export default class HomePage extends Vue {
+    loading = false
+    async asyncData({ $axios }: any) {
+      const stations = await $axios.$get('/api/stations')
+      return { stations }
+    }
 
-  async remove(id: string) {
-    this.loading = true
-    await this.$axios.$delete(`/api/stations/${id}`)
-    await this.$nuxt.refresh()
-    this.loading = false
-  }
+    async remove(id: string) {
+      this.loading = true
+      await this.$axios.$delete(`/api/stations/${id}`)
+      await this.$nuxt.refresh()
+      this.loading = false
+    }
 
-  go(id: string) {
-    this.$router.push('./stations/' + id)
+    go(id: string) {
+      this.$router.push('./stations/' + id)
+    }
   }
-}
 </script>

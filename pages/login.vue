@@ -37,8 +37,10 @@
             block
             color="primary"
             @click="userLogin()"
-            >Login</v-btn
           >
+            <v-icon left>mdi-login-variant</v-icon>
+            Login
+          </v-btn>
         </v-card-text>
       </v-card>
     </v-col>
@@ -50,40 +52,40 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import { Validations } from 'vuelidate-property-decorators'
-import { required, email } from 'vuelidate/lib/validators'
+  import { Component, Vue } from 'nuxt-property-decorator'
+  import { Validations } from 'vuelidate-property-decorators'
+  import { required, email } from 'vuelidate/lib/validators'
 
-@Component({
-  auth: 'guest',
-  layout: 'blank',
-  head: {
-    title: 'Login',
-  },
-})
-export default class LoginPage extends Vue {
-  loading = false
-  login = {
-    email: '',
-    password: '',
-  }
-
-  @Validations()
-  validations = {
-    login: {
-      email: { required, email },
-      password: { required },
+  @Component({
+    auth: 'guest',
+    layout: 'blank',
+    head: {
+      title: 'Login',
     },
-  }
+  })
+  export default class LoginPage extends Vue {
+    loading = false
+    login = {
+      email: '',
+      password: '',
+    }
 
-  async userLogin() {
-    try {
-      this.loading = true
-      await this.$auth.loginWith('local', { data: this.login })
-      this.$router.push('/')
-    } catch (err) {
-      console.log(err)
+    @Validations()
+    validations = {
+      login: {
+        email: { required, email },
+        password: { required },
+      },
+    }
+
+    async userLogin() {
+      try {
+        this.loading = true
+        await this.$auth.loginWith('local', { data: this.login })
+        this.$router.push('/')
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
-}
 </script>

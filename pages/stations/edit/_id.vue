@@ -79,6 +79,7 @@
           color="primary"
           @click="edit()"
         >
+          <v-icon left>mdi-pencil</v-icon>
           Edit station
         </v-btn>
       </v-card-text>
@@ -91,62 +92,62 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import { Validations } from 'vuelidate-property-decorators'
-import { required, numeric } from 'vuelidate/lib/validators'
+  import { Component, Vue } from 'nuxt-property-decorator'
+  import { Validations } from 'vuelidate-property-decorators'
+  import { required, numeric } from 'vuelidate/lib/validators'
 
-@Component({
-  head(this: EditPage): object {
-    return {
-      title: `Edit ${this.station.name}`,
+  @Component({
+    head(this: EditPage): object {
+      return {
+        title: `Edit ${this.station.name}`,
+      }
+    },
+  })
+  export default class EditPage extends Vue {
+    station: any
+    name: string = ''
+    description: string = ''
+    genre: string = ''
+    listeners: string = ''
+    icecastPassword: string = ''
+    icecastPort: string = ''
+    loading = false
+
+    @Validations()
+    validations = {
+      name: { required },
+      description: {},
+      genre: {},
+      listeners: { numeric },
+      icecastPassword: { required },
+      icecastPort: { required, numeric },
     }
-  },
-})
-export default class EditPage extends Vue {
-  station: any
-  name: string = ''
-  description: string = ''
-  genre: string = ''
-  listeners: string = ''
-  icecastPassword: string = ''
-  icecastPort: string = ''
-  loading = false
 
-  @Validations()
-  validations = {
-    name: { required },
-    description: {},
-    genre: {},
-    listeners: { numeric },
-    icecastPassword: { required },
-    icecastPort: { required, numeric },
-  }
+    async asyncData({ $axios, params }: any) {
+      const station = await $axios.$get(`/api/stations/${params.id}`)
+      return { station }
+    }
 
-  async asyncData({ $axios, params }: any) {
-    const station = await $axios.$get(`/api/stations/${params.id}`)
-    return { station }
-  }
+    mounted() {
+      this.name = this.station.name
+      this.description = this.station.description
+      this.genre = this.station.genre
+      this.listeners = this.station.listeners
+      this.icecastPassword = this.station.icecast_password
+      this.icecastPort = this.station.icecast_port
+    }
 
-  mounted() {
-    this.name = this.station.name
-    this.description = this.station.description
-    this.genre = this.station.genre
-    this.listeners = this.station.listeners
-    this.icecastPassword = this.station.icecast_password
-    this.icecastPort = this.station.icecast_port
+    async edit() {
+      this.loading = true
+      await this.$axios.$put(`/api/stations/${this.$route.params.id}`, {
+        name: this.name,
+        description: this.description,
+        genre: this.genre,
+        icecast_password: this.icecastPassword,
+        icecast_port: Number(this.icecastPort),
+        listeners: this.listeners !== '0' ? Number(this.listeners) : 250,
+      })
+      this.$router.push(`/stations/${this.$route.params.id}`)
+    }
   }
-
-  async edit() {
-    this.loading = true
-    await this.$axios.$put(`/api/stations/${this.$route.params.id}`, {
-      name: this.name,
-      description: this.description,
-      genre: this.genre,
-      icecast_password: this.icecastPassword,
-      icecast_port: Number(this.icecastPort),
-      listeners: this.listeners !== '0' ? Number(this.listeners) : 250,
-    })
-    this.$router.push(`/stations/${this.$route.params.id}`)
-  }
-}
 </script>

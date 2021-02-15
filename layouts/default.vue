@@ -20,6 +20,7 @@
           size="large"
           @click="logout"
         >
+          <v-icon left>mdi-logout-variant</v-icon>
           Log out
         </v-btn>
       </div>
@@ -59,30 +60,30 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import FooterComponent from '~/components/footer.vue'
+  import { Component, Vue } from 'nuxt-property-decorator'
+  import FooterComponent from '~/components/footer.vue'
 
-@Component({
-  components: { FooterComponent },
-})
-export default class DefaultLayout extends Vue {
-  drawer = null
-  items = [
-    {
-      icon: 'mdi-home',
-      title: 'Home',
-      to: '/',
-    },
-    {
-      icon: 'mdi-cog-outline',
-      title: 'Config',
-      to: '/config',
-    },
-  ]
+  @Component({
+    components: { FooterComponent },
+  })
+  export default class DefaultLayout extends Vue {
+    drawer = null
+    items = [
+      {
+        icon: 'mdi-home',
+        title: 'Home',
+        to: '/',
+      },
+      {
+        icon: 'mdi-cog-outline',
+        title: 'Config',
+        to: '/config',
+      },
+    ]
 
-  async logout() {
-    await this.$auth.logout()
-    this.$router.push('/login')
+    async logout() {
+      await this.$auth.logout()
+      this.$router.push('/login')
+    }
   }
-}
 </script>
