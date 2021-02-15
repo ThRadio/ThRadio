@@ -12,6 +12,12 @@ These are the changes that will be incorporated in the new version
 
 - Redesigned inital page using stepper
 
+- Style of the logout button changed
+
+- Get icecast statistics
+
+- Player added
+
 ## Bug Fixes
 
 - Fixed the configuration update form
