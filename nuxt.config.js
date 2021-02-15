@@ -69,7 +69,9 @@ export default {
     },
   },
 
-  loading: { color: '#fff' },
+  loading: {
+    color: '#fff', height: '5px'
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {

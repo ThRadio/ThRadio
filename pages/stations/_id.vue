@@ -351,6 +351,16 @@
       return { station, statistics }
     }
 
+    mounted() {
+      window.setInterval(async () => {
+        const statistics = await this.$axios.$get(
+          `/api/stations/statistics/${this.station.icecast_port}`,
+          { progress: false }
+        )
+        this.statistics = statistics
+      }, 10000)
+    }
+
     async remove() {
       this.loading = true
       await this.$axios.$delete(`/api/stations/${this.station._id}`)
