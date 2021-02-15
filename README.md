@@ -24,7 +24,7 @@ $ cd /var/thradio
 
 # Use these commands to download our Docker Utility Script, set it as executable and then run the Docker installation process:
 
-$ curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/master/thradio.sh > thradio.sh
+$ curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/thradio.sh > thradio.sh
 $ chmod a+x thradio.sh
 $ ./thradio.sh install
 ```
