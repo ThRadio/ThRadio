@@ -1,82 +1,117 @@
 <template>
   <div class="AddStationPage">
-    <v-card>
+    <v-stepper color="rgba(0, 0, 0, 0)" v-model="step">
       <v-card-title primary-title> Add station </v-card-title>
-      <v-card-text>
-        <v-text-field
-          v-model="name"
-          dense
-          label="Name"
-          outlined
-          block
-          @input="$v.name.$touch()"
-          @blur="$v.name.$touch()"
-        ></v-text-field>
+      <v-divider></v-divider>
 
-        <v-textarea
-          v-model="description"
-          outlined
-          dense
-          label="Description"
-          hint="Optional"
-          @input="$v.description.$touch()"
-          @blur="$v.description.$touch()"
-        ></v-textarea>
+      <v-stepper-header>
+        <v-stepper-step :complete="step > 1" step="1">
+          Information
+        </v-stepper-step>
 
-        <v-text-field
-          v-model="genre"
-          outlined
-          dense
-          block
-          label="Genre"
-          hint="Optional"
-          @input="$v.genre.$touch()"
-          @blur="$v.genre.$touch()"
-        ></v-text-field>
+        <v-divider></v-divider>
 
-        <v-text-field
-          v-model="icecastPassword"
-          dense
-          label="Password icecast"
-          outlined
-          block
-          @input="$v.icecastPassword.$touch()"
-          @blur="$v.icecastPassword.$touch()"
-        ></v-text-field>
+        <v-stepper-step :complete="step > 2" step="2"> Icecast </v-stepper-step>
+      </v-stepper-header>
 
-        <v-text-field
-          v-model="icecastPort"
-          dense
-          label="Port icecast"
-          outlined
-          block
-          @input="$v.icecastPort.$touch()"
-          @blur="$v.icecastPort.$touch()"
-        ></v-text-field>
+      <v-stepper-items>
+        <v-stepper-content step="1">
+          <v-card flat color="transparent" class="mb-4">
+            <v-card-text class="pa-0 pt-2">
+              <v-text-field
+                v-model="information.name"
+                dense
+                label="Name"
+                outlined
+                block
+                @input="$v.information.name.$touch()"
+                @blur="$v.information.name.$touch()"
+              ></v-text-field>
 
-        <v-text-field
-          v-model="listeners"
-          outlined
-          dense
-          block
-          label="Maximum listeners"
-          hint="Optional (Default 250)"
-          @input="$v.genre.$touch()"
-          @blur="$v.genre.$touch()"
-        ></v-text-field>
+              <v-textarea
+                v-model="information.description"
+                outlined
+                dense
+                label="Description"
+                hint="Optional"
+                @input="$v.information.description.$touch()"
+                @blur="$v.information.description.$touch()"
+              ></v-textarea>
 
-        <v-btn
-          :disabled="$v.$invalid"
-          depressed
-          block
-          color="primary"
-          @click="add()"
-        >
-          <v-icon left>mdi-plus-circle</v-icon>
-          Add station
-        </v-btn>
-      </v-card-text>
-    </v-card>
+              <v-text-field
+                v-model="information.genre"
+                outlined
+                dense
+                block
+                label="Genre"
+                hint="Optional"
+                @input="$v.information.genre.$touch()"
+                @blur="$v.information.genre.$touch()"
+              ></v-text-field>
+            </v-card-text>
+            <v-card-actions class="pa-0 pt-2">
+              <v-btn
+                color="primary"
+                :disabled="$v.information.$invalid"
+                @click="step = 2"
+              >
+                <v-icon left>mdi-arrow-right</v-icon>
+                Continue
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-stepper-content>
+
+        <v-stepper-content step="2">
+          <v-card flat color="transparent" class="mb-4">
+            <v-card-text class="pa-0 pt-2">
+              <v-text-field
+                v-model="icecast.password"
+                dense
+                label="Password icecast"
+                outlined
+                block
+                @input="$v.icecast.password.$touch()"
+                @blur="$v.icecast.password.$touch()"
+              ></v-text-field>
+
+              <v-text-field
+                v-model="icecast.port"
+                dense
+                label="Port icecast"
+                outlined
+                block
+                @input="$v.icecast.port.$touch()"
+                @blur="$v.icecast.port.$touch()"
+              ></v-text-field>
+
+              <v-text-field
+                v-model="icecast.listeners"
+                outlined
+                dense
+                block
+                label="Maximum listeners"
+                hint="Optional (Default 250)"
+                @input="$v.icecast.listeners.$touch()"
+                @blur="$v.icecast.listeners.$touch()"
+              ></v-text-field>
+            </v-card-text>
+
+            <v-card-actions class="pa-0 pt-2">
+              <v-btn outlined color="primary" @click="step = 1">
+                <v-icon left>mdi-arrow-left</v-icon>
+                Back
+              </v-btn>
+
+              <v-btn color="primary" :disabled="$v.$invalid" @click="add">
+                <v-icon left>mdi-plus-circle</v-icon>
+                Add station
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-stepper-content>
+      </v-stepper-items>
+    </v-stepper>
 
     <v-overlay :value="loading">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
@@ -85,47 +120,58 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import { Validations } from 'vuelidate-property-decorators'
-import { required, numeric } from 'vuelidate/lib/validators'
+  import { Component, Vue } from 'nuxt-property-decorator'
+  import { Validations } from 'vuelidate-property-decorators'
+  import { required, numeric } from 'vuelidate/lib/validators'
 
-@Component({
-  head(this: EditPage): object {
-    return {
-      title: 'Add station',
+  @Component({
+    head(this: EditPage): object {
+      return {
+        title: 'Add station',
+      }
+    },
+  })
+  export default class EditPage extends Vue {
+    step = 1
+    information = {
+      name: '',
+      description: '',
+      genre: '',
     }
-  },
-})
-export default class EditPage extends Vue {
-  name: string = ''
-  description: string = ''
-  genre: string = ''
-  icecastPassword: string = ''
-  icecastPort: string = ''
-  listeners: string = ''
-  loading = false
+    icecast = {
+      password: '',
+      port: '',
+      listeners: '',
+    }
 
-  @Validations()
-  validations = {
-    name: { required },
-    description: {},
-    genre: {},
-    icecastPassword: { required },
-    icecastPort: { required, numeric },
-    listeners: { numeric },
-  }
+    loading = false
 
-  async add() {
-    this.loading = true
-    const station = await this.$axios.$post('/api/stations', {
-      name: this.name,
-      description: this.description,
-      genre: this.genre,
-      icecast_password: this.icecastPassword,
-      icecast_port: Number(this.icecastPort),
-      listeners: this.listeners !== '' ? Number(this.listeners) : 250,
-    })
-    this.$router.push(`/stations/${station._id}`)
+    @Validations()
+    validations = {
+      information: {
+        name: { required },
+        description: {},
+        genre: {},
+      },
+      icecast: {
+        password: { required },
+        port: { required, numeric },
+        listeners: { numeric },
+      },
+    }
+
+    async add() {
+      this.loading = true
+      const station = await this.$axios.$post('/api/stations', {
+        name: this.information.name,
+        description: this.information.description,
+        genre: this.information.genre,
+        icecast_password: this.icecast.password,
+        icecast_port: Number(this.icecast.port),
+        listeners:
+          this.icecast.listeners !== '' ? Number(this.icecast.listeners) : 250,
+      })
+      this.$router.push(`/stations/${station._id}`)
+    }
   }
-}
 </script>
