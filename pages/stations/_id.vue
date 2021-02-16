@@ -331,6 +331,7 @@
     },
   })
   export default class StationPage extends Vue {
+    interval: any
     station: any
     statistics: any
     loading = false
@@ -352,13 +353,17 @@
     }
 
     mounted() {
-      window.setInterval(async () => {
+      this.interval = window.setInterval(async () => {
         const statistics = await this.$axios.$get(
           `/api/stations/statistics/${this.station.icecast_port}`,
           { progress: false }
         )
         this.statistics = statistics
       }, 10000)
+    }
+
+    destroyed() {
+      window.clearInterval(this.interval)
     }
 
     async remove() {

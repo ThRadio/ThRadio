@@ -6,6 +6,8 @@ These are the changes that will be incorporated in the new version
 
 ## Bug Fixes
 
+- Fixed the statistics retrieval interval
+
 ---
 
 # ThRadio 0.2 (Feb 15, 2021)
