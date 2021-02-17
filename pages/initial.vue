@@ -139,6 +139,7 @@
 
     user = {
       name: '',
+      username: '',
       email: '',
       password: '',
     }
@@ -155,6 +156,7 @@
       },
       user: {
         name: { required },
+        username: { required },
         email: { required, email },
         password: { required },
       },
@@ -169,6 +171,7 @@
         },
         user: {
           name: this.user.name,
+          username: this.user.username,
           email: this.user.email,
           password: this.user.password,
         },

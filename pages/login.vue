@@ -54,7 +54,7 @@
 <script lang="ts">
   import { Component, Vue } from 'nuxt-property-decorator'
   import { Validations } from 'vuelidate-property-decorators'
-  import { required, email } from 'vuelidate/lib/validators'
+  import { required } from 'vuelidate/lib/validators'
 
   @Component({
     auth: 'guest',
@@ -66,14 +66,14 @@
   export default class LoginPage extends Vue {
     loading = false
     login = {
-      email: '',
+      username: '',
       password: '',
     }
 
     @Validations()
     validations = {
       login: {
-        email: { required, email },
+        username: { required },
         password: { required },
       },
     }
