@@ -75,6 +75,15 @@
                   @blur="$v.user.name.$touch()"
                 ></v-text-field>
                 <v-text-field
+                  v-model="user.username"
+                  dense
+                  :label="$t('username')"
+                  outlined
+                  block
+                  @input="$v.user.username.$touch()"
+                  @blur="$v.user.username.$touch()"
+                ></v-text-field>
+                <v-text-field
                   v-model="user.email"
                   dense
                   :label="$t('email')"
