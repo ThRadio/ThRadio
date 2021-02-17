@@ -1,20 +1,24 @@
 <template>
   <div class="AddStationPage">
-    <v-stepper color="rgba(0, 0, 0, 0)" v-model="step">
-      <v-card-title primary-title> Add station </v-card-title>
-      <v-divider></v-divider>
+    <Stepper :value="step" :steps="2">
+      <!-- Title -->
+      <template #title>
+        <v-card-title primary-title> Add station </v-card-title>
+      </template>
 
-      <v-stepper-header>
+      <!-- Titles steps -->
+      <template #step-1>
         <v-stepper-step :complete="step > 1" step="1">
           Information
         </v-stepper-step>
+      </template>
 
-        <v-divider></v-divider>
-
+      <template #step-2>
         <v-stepper-step :complete="step > 2" step="2"> Icecast </v-stepper-step>
-      </v-stepper-header>
+      </template>
 
-      <v-stepper-items>
+      <!-- Content steps -->
+      <template #content-1>
         <v-stepper-content step="1">
           <v-card flat color="transparent" class="mb-4">
             <v-card-text class="pa-0 pt-2">
@@ -49,6 +53,7 @@
                 @blur="$v.information.genre.$touch()"
               ></v-text-field>
             </v-card-text>
+
             <v-card-actions class="pa-0 pt-2">
               <v-btn
                 color="primary"
@@ -61,7 +66,9 @@
             </v-card-actions>
           </v-card>
         </v-stepper-content>
+      </template>
 
+      <template #content-2>
         <v-stepper-content step="2">
           <v-card flat color="transparent" class="mb-4">
             <v-card-text class="pa-0 pt-2">
@@ -110,8 +117,8 @@
             </v-card-actions>
           </v-card>
         </v-stepper-content>
-      </v-stepper-items>
-    </v-stepper>
+      </template>
+    </Stepper>
 
     <v-overlay :value="loading">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
@@ -125,13 +132,11 @@
   import { required, numeric } from 'vuelidate/lib/validators'
 
   @Component({
-    head(this: EditPage): object {
-      return {
-        title: 'Add station',
-      }
+    head: {
+      title: 'Add station',
     },
   })
-  export default class EditPage extends Vue {
+  export default class AddStationPage extends Vue {
     step = 1
     information = {
       name: '',

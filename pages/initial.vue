@@ -1,26 +1,33 @@
 <template>
   <v-row align="center" justify="center">
-    <v-col cols="12" class="text-center">
-      <h2>ThRadio</h2>
-    </v-col>
     <v-col cols="12">
-      <v-stepper v-model="step">
-        <v-stepper-header>
+      <Stepper :value="step" :steps="2">
+        <!-- Title -->
+        <template #title>
+          <v-card-title primary-title>
+            <v-spacer />
+            ThRadio
+            <v-spacer />
+          </v-card-title>
+        </template>
+
+        <!-- Titles steps -->
+        <template #step-1>
           <v-stepper-step :complete="step > 1" step="1">
             Configuration
           </v-stepper-step>
-
-          <v-divider></v-divider>
-
+        </template>
+        <template #step-2>
           <v-stepper-step :complete="step > 2" step="2">
             Admin user
           </v-stepper-step>
-        </v-stepper-header>
+        </template>
 
-        <v-stepper-items>
+        <!-- Content steps -->
+        <template #content-1>
           <v-stepper-content step="1">
-            <v-card class="mb-12">
-              <v-card-text>
+            <v-card flat color="transparent" class="mb-4">
+              <v-card-text class="pa-0 pt-2">
                 <v-text-field
                   v-model="config.name"
                   dense
@@ -40,21 +47,24 @@
                   @blur="$v.config.urlBase.$touch()"
                 ></v-text-field>
               </v-card-text>
+              <v-card-actions class="pa-0 pt-2">
+                <v-btn
+                  color="primary"
+                  :disabled="$v.config.$invalid"
+                  @click="step = 2"
+                >
+                  <v-icon left>mdi-arrow-right</v-icon>
+                  Continue
+                </v-btn>
+              </v-card-actions>
             </v-card>
-
-            <v-btn
-              color="primary"
-              :disabled="$v.config.$invalid"
-              @click="step = 2"
-            >
-              <v-icon left>mdi-arrow-right</v-icon>
-              Continue
-            </v-btn>
           </v-stepper-content>
+        </template>
 
+        <template #content-2>
           <v-stepper-content step="2">
-            <v-card class="mb-12"
-              ><v-card-text>
+            <v-card flat color="transparent" class="mb-4">
+              <v-card-text class="pa-0 pt-2">
                 <v-text-field
                   v-model="user.name"
                   dense
@@ -84,20 +94,21 @@
                   @blur="$v.user.password.$touch()"
                 ></v-text-field>
               </v-card-text>
+              <v-card-actions class="pa-0 pt-2">
+                <v-btn outlined color="primary" @click="step = 1">
+                  <v-icon left>mdi-arrow-left</v-icon>
+                  Back
+                </v-btn>
+
+                <v-btn color="primary" :disabled="$v.$invalid" @click="save">
+                  <v-icon left>mdi-radio</v-icon>
+                  Save
+                </v-btn>
+              </v-card-actions>
             </v-card>
-
-            <v-btn color="primary" @click="step = 1">
-              <v-icon left>mdi-arrow-left</v-icon>
-              Back
-            </v-btn>
-
-            <v-btn color="primary" :disabled="$v.$invalid" @click="save">
-              <v-icon left>mdi-radio</v-icon>
-              Save
-            </v-btn>
           </v-stepper-content>
-        </v-stepper-items>
-      </v-stepper>
+        </template>
+      </Stepper>
     </v-col>
 
     <v-overlay :value="loading">

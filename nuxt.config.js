@@ -73,6 +73,8 @@ export default {
     color: '#fff', height: '5px'
   },
 
+  components: true,
+
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],

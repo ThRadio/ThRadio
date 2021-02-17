@@ -1,30 +1,32 @@
 <template>
   <div class="EditStationPage">
-    <v-stepper v-model="step">
-      <v-app-bar flat color="rgba(0, 0, 0, 0)">
-        <v-btn :to="`/stations/${station._id}`" icon>
-          <v-icon>mdi-arrow-left</v-icon>
-        </v-btn>
-        <v-toolbar-title class="title white--text pl-0">
-          Edit station
-        </v-toolbar-title>
-      </v-app-bar>
+    <Stepper :step="step" :steps="2">
+      <!-- Title -->
+      <template #title>
+        <v-app-bar flat color="rgba(0, 0, 0, 0)">
+          <v-btn :to="`/stations/${station._id}`" icon>
+            <v-icon>mdi-arrow-left</v-icon>
+          </v-btn>
+          <v-toolbar-title class="title white--text pl-0">
+            Edit station
+          </v-toolbar-title>
+        </v-app-bar>
+      </template>
 
-      <v-divider></v-divider>
-
-      <v-stepper-header>
+      <!-- Titles steps -->
+      <template #step-1>
         <v-stepper-step
           :rules="[() => !$v.information.$invalid]"
           editable
-          :complete="!$v.icecast.$invalid"
+          :complete="!$v.information.$invalid"
           step="1"
         >
           Information
           <small v-if="$v.information.$invalid">Incomplete</small>
         </v-stepper-step>
+      </template>
 
-        <v-divider></v-divider>
-
+      <template #step-2>
         <v-stepper-step
           :rules="[() => !$v.icecast.$invalid]"
           editable
@@ -34,9 +36,10 @@
           Icecast
           <small v-if="$v.icecast.$invalid">Incomplete</small>
         </v-stepper-step>
-      </v-stepper-header>
+      </template>
 
-      <v-stepper-items>
+      <!-- Content steps -->
+      <template #content-1>
         <v-stepper-content step="1">
           <v-card flat color="transparent" class="mb-4">
             <v-card-text class="pa-0 pt-2">
@@ -73,7 +76,9 @@
             </v-card-text>
           </v-card>
         </v-stepper-content>
+      </template>
 
+      <template #content-2>
         <v-stepper-content step="2">
           <v-card flat color="transparent" class="mb-4">
             <v-card-text class="pa-0 pt-2">
@@ -110,8 +115,8 @@
             </v-card-text>
           </v-card>
         </v-stepper-content>
-      </v-stepper-items>
-    </v-stepper>
+      </template>
+    </Stepper>
 
     <v-btn
       class="mt-3"
@@ -143,8 +148,8 @@
     },
   })
   export default class EditStationPage extends Vue {
-    station: any
     step = 1
+    station: any
     information = {
       name: '',
       description: '',

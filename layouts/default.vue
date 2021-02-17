@@ -56,17 +56,14 @@
         <nuxt />
       </v-container>
     </v-main>
-    <FooterComponent></FooterComponent>
+    <Footer></Footer>
   </v-app>
 </template>
 
 <script lang="ts">
   import { Component, Vue } from 'nuxt-property-decorator'
-  import FooterComponent from '~/components/footer.vue'
 
-  @Component({
-    components: { FooterComponent },
-  })
+  @Component
   export default class DefaultLayout extends Vue {
     drawer = null
     items = [

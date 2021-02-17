@@ -4,9 +4,13 @@ These are the changes that will be incorporated in the new version
 
 ## New Features/Changes
 
+- Created stepper component, this is responsive v-stepper
+
 ## Bug Fixes
 
 - Fixed the statistics retrieval interval
+
+- Fix icecast statistics
 
 ---
 
