@@ -8,23 +8,22 @@
           <v-spacer></v-spacer>
         </v-card-title>
         <v-card-subtitle class="text-center">
-          <h3>Login</h3>
+          <h3>{{ $t('login') }}</h3>
         </v-card-subtitle>
         <v-card-text>
           <v-text-field
-            v-model="login.email"
+            v-model="login.username"
             dense
-            label="Email"
+            :label="$t('username')"
             outlined
             block
-            type="email"
-            @input="$v.login.email.$touch()"
-            @blur="$v.login.email.$touch()"
+            @input="$v.login.username.$touch()"
+            @blur="$v.login.username.$touch()"
           ></v-text-field>
           <v-text-field
             v-model="login.password"
             dense
-            label="Password"
+            :label="$t('password')"
             outlined
             type="password"
             block
@@ -39,7 +38,7 @@
             @click="userLogin()"
           >
             <v-icon left>mdi-login-variant</v-icon>
-            Login
+            {{ $t('login') }}
           </v-btn>
         </v-card-text>
       </v-card>
@@ -59,8 +58,10 @@
   @Component({
     auth: 'guest',
     layout: 'blank',
-    head: {
-      title: 'Login',
+    head(this: LoginPage): object {
+      return {
+        title: this.$t('login'),
+      }
     },
   })
   export default class LoginPage extends Vue {

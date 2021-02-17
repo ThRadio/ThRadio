@@ -1,0 +1,15 @@
+{
+  "username": "Username",
+  "password": "Password",
+  "login": "Login",
+  "add_station": "Add station",
+  "continue": "Continue",
+  "configuration": "Configuration",
+  "instance_name": "Instance name",
+  "url_base": "Base URL of the site",
+  "admin_user": "Admin user",
+  "display_name": "Display name",
+  "email": "Email",
+  "back": "Back",
+  "save": "Save"
+}

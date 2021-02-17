@@ -28,6 +28,7 @@
       "@nuxtjs/axios",
       "@types/node",
       "@nuxtjs/auth-next",
+      "nuxt-i18n",
     ]
   },
   "exclude": [

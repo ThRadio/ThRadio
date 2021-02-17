@@ -16,7 +16,7 @@
       <slot name="title"></slot>
       <v-divider></v-divider>
 
-      <v-stepper-header>
+      <v-stepper-header class="text-center">
         <template v-for="n in steps">
           <slot :name="`step-${n}`"> </slot>
           <v-divider v-if="n != steps" :key="'ls-step-' + n"></v-divider>

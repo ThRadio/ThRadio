@@ -43,7 +43,26 @@ export default {
     '@nuxtjs/proxy',
     'nuxt-clipboard',
     '@nuxtjs/auth-next',
+    'nuxt-i18n',
   ],
+
+  i18n: {
+    seo: true,
+    langDir: 'locales/',
+    locales: [
+      { code: 'en', iso: 'en', name: 'English', file: 'en.json' },
+      { code: 'es', iso: 'es', name: 'Español', file: 'es.json' }
+    ],
+    defaultLocale: 'en',
+    lazy: true,
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+    },
+    vueI18n: {
+      fallbackLocale: ['en', 'es'],
+    }
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {

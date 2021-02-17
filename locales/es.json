@@ -1,0 +1,15 @@
+{
+  "add_station": "Añadir emisora",
+  "admin_user": "Usuario administrador",
+  "back": "Atrás",
+  "configuration": "Configuración",
+  "continue": "Continuar",
+  "display_name": "Nombre a mostrar",
+  "email": "Correo electrónico",
+  "instance_name": "Nombre de la instancia ",
+  "login": "Iniciar sesión",
+  "password": "Contraseña",
+  "save": "Guardar",
+  "url_base": "URL base del sitio",
+  "username": "Nombre de usuario"
+}

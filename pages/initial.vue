@@ -14,12 +14,12 @@
         <!-- Titles steps -->
         <template #step-1>
           <v-stepper-step :complete="step > 1" step="1">
-            Configuration
+            {{ $t('configuration') }}
           </v-stepper-step>
         </template>
         <template #step-2>
           <v-stepper-step :complete="step > 2" step="2">
-            Admin user
+            {{ $t('admin_user') }}
           </v-stepper-step>
         </template>
 
@@ -31,7 +31,7 @@
                 <v-text-field
                   v-model="config.name"
                   dense
-                  label="Instance name"
+                  :label="$t('instance_name')"
                   outlined
                   block
                   @input="$v.config.name.$touch()"
@@ -40,7 +40,7 @@
                 <v-text-field
                   v-model="config.urlBase"
                   dense
-                  label="Base URL of the site"
+                  :label="$t('url_base')"
                   outlined
                   block
                   @input="$v.config.urlBase.$touch()"
@@ -54,7 +54,7 @@
                   @click="step = 2"
                 >
                   <v-icon left>mdi-arrow-right</v-icon>
-                  Continue
+                  {{ $t('continue') }}
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -68,7 +68,7 @@
                 <v-text-field
                   v-model="user.name"
                   dense
-                  label="Display user name"
+                  :label="$t('display_name')"
                   outlined
                   block
                   @input="$v.user.name.$touch()"
@@ -77,7 +77,7 @@
                 <v-text-field
                   v-model="user.email"
                   dense
-                  label="Email"
+                  :label="$t('email')"
                   outlined
                   block
                   @input="$v.user.email.$touch()"
@@ -86,7 +86,7 @@
                 <v-text-field
                   v-model="user.password"
                   dense
-                  label="Password"
+                  :label="$t('password')"
                   outlined
                   type="password"
                   block
@@ -97,12 +97,12 @@
               <v-card-actions class="pa-0 pt-2">
                 <v-btn outlined color="primary" @click="step = 1">
                   <v-icon left>mdi-arrow-left</v-icon>
-                  Back
+                  {{ $t('back') }}
                 </v-btn>
 
                 <v-btn color="primary" :disabled="$v.$invalid" @click="save">
                   <v-icon left>mdi-radio</v-icon>
-                  Save
+                  {{ $t('save') }}
                 </v-btn>
               </v-card-actions>
             </v-card>
