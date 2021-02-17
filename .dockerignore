@@ -7,3 +7,5 @@ docker-compose.sample.yaml
 Caddyfile.sample
 
 .env
+
+keys.json
