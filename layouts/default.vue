@@ -40,7 +40,7 @@
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
+            <v-list-item-title v-text="$t(item.title)" />
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -52,7 +52,7 @@
       >
     </v-app-bar>
     <v-main>
-      <v-container>
+      <v-container fluid>
         <nuxt />
       </v-container>
     </v-main>
@@ -69,12 +69,12 @@
     items = [
       {
         icon: 'mdi-home',
-        title: this.$t('home'),
+        title: 'home',
         to: this.localePath('/'),
       },
       {
         icon: 'mdi-cog-outline',
-        title: this.$t('configuration'),
+        title: 'configuration',
         to: this.localePath('/config'),
       },
     ]

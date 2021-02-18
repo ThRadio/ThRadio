@@ -1,19 +1,17 @@
 <template>
   <v-app dark>
     <v-main>
-      <v-container fill-height>
+      <v-container class="fill-height" fluid>
         <nuxt />
       </v-container>
     </v-main>
-    <FooterComponent></FooterComponent>
+    <Footer></Footer>
   </v-app>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import FooterComponent from '~/components/footer.vue'
-@Component({
-  components: { FooterComponent },
-})
-export default class BlankLayout extends Vue {}
+  import { Component, Vue } from 'nuxt-property-decorator'
+
+  @Component
+  export default class BlankLayout extends Vue {}
 </script>
