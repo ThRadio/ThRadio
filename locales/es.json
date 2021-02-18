@@ -27,6 +27,7 @@
   "maximum_listeners": "Máximo de oyentes",
   "mount_point": "Punto de montaje",
   "msg_success": "Actualizado correctamente",
+  "msg_update": "Nueva actualización disponible siga las instrucciones para actualizar",
   "name": "Nombre",
   "not_found": "No encontrado",
   "optional": "Opcional",

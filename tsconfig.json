@@ -29,6 +29,7 @@
       "@types/node",
       "@nuxtjs/auth-next",
       "nuxt-i18n",
+      "@types/semver"
     ]
   },
   "exclude": [

@@ -27,6 +27,7 @@
   "maximum_listeners": "Maximum listeners",
   "mount_point": "Mount point",
   "msg_success": "Successfully update",
+  "msg_update": "New update available follow the instructions to update",
   "name": "Name",
   "not_found": "Not found",
   "optional": "Optional",

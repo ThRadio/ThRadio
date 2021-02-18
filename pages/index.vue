@@ -1,5 +1,36 @@
 <template>
   <div class="HomePage">
+    <v-row
+      v-if="
+        semver.gt(semver.coerce(info.version), semver.coerce($config.version))
+      "
+      class="mb-2"
+      align="center"
+    >
+      <v-col cols="12" md="9" class="grow">
+        <v-alert
+          class="mb-0"
+          prominent
+          dense
+          type="info"
+          icon="mdi-rocket-launch"
+        >
+          {{ $t('msg_update') }}
+        </v-alert>
+      </v-col>
+      <v-col cols="12" md="3" class="shrink">
+        <v-btn
+          href="https://bit.ly/thradio-update"
+          target="blank"
+          color="primary"
+          block
+        >
+          <v-icon left>mdi-rocket-launch</v-icon>
+          {{ $t('update') }}
+        </v-btn>
+      </v-col>
+    </v-row>
+
     <v-card>
       <v-app-bar flat color="rgba(0, 0, 0, 0)">
         <v-toolbar-title class="title white--text pl-0">
@@ -75,6 +106,7 @@
 </template>
 
 <script lang="ts">
+  import * as semver from 'semver'
   import { Component, Vue } from 'nuxt-property-decorator'
 
   @Component({
@@ -85,10 +117,12 @@
     },
   })
   export default class HomePage extends Vue {
+    semver = semver
     loading = false
     async asyncData({ $axios }: any) {
       const stations = await $axios.$get('/api/stations')
-      return { stations }
+      const info = await $axios.$get('/api/app/info')
+      return { stations, info }
     }
 
     async remove(id: string) {
