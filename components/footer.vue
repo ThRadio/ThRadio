@@ -1,5 +1,5 @@
 <template>
-  <v-footer class="grey darken-3" inset padless app>
+  <v-footer class="grey darken-3" padless app>
     <v-row justify="center" no-gutters>
       <v-menu top offset-y>
         <template v-slot:activator="{ on, attrs }">

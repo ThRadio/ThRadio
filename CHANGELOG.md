@@ -10,6 +10,8 @@ These are the changes that will be incorporated in the new version
 
 - Implemented i18n for languages
 
+- Notification of available update implemented
+
 ## Bug Fixes
 
 - Fixed the statistics retrieval interval
