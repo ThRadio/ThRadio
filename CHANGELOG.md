@@ -6,6 +6,10 @@ These are the changes that will be incorporated in the new version
 
 - Created stepper component, this is responsive v-stepper
 
+- Implemented auth by username
+
+- Implemented i18n for languages
+
 ## Bug Fixes
 
 - Fixed the statistics retrieval interval

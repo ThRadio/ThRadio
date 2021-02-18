@@ -2,13 +2,13 @@
   <div class="ConfigPage">
     <v-card>
       <v-card-title>
-        <h4>Configuration</h4>
+        <h4>{{ $t('configuration') }}</h4>
       </v-card-title>
       <v-card-text>
         <v-text-field
           v-model="name"
           dense
-          label="Instance name"
+          :label="$t('instance_name')"
           outlined
           block
           @input="$v.name.$touch()"
@@ -17,7 +17,7 @@
         <v-text-field
           v-model="urlBase"
           dense
-          label="Base URL of the site"
+          :label="$t('url_base')"
           outlined
           block
           @input="$v.urlBase.$touch()"
@@ -31,7 +31,7 @@
           @click="update"
         >
           <v-icon left>mdi-pencil</v-icon>
-          Update
+          {{ $t('update') }}
         </v-btn>
       </v-card-text>
     </v-card>
@@ -45,7 +45,7 @@
 
       <template #action="{ attrs }">
         <v-btn color="pink" text v-bind="attrs" @click="snackbar.show = false">
-          Close
+          {{ $t('close') }}
         </v-btn>
       </template>
     </v-snackbar>
@@ -58,8 +58,10 @@
   import { required } from 'vuelidate/lib/validators'
 
   @Component({
-    head: {
-      title: 'Config',
+    head(this: ConfigPage): object {
+      return {
+        title: this.$t('configuration'),
+      }
     },
   })
   export default class ConfigPage extends Vue {
@@ -93,7 +95,7 @@
         this.loading = false
         await this.$store.dispatch('getConfig')
         this.snackbar.show = true
-        this.snackbar.text = 'Successfully update'
+        this.snackbar.text = this.$t('msg_success').toString()
       } catch (err) {
         console.log(err)
       }

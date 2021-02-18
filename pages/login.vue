@@ -83,7 +83,7 @@
       try {
         this.loading = true
         await this.$auth.loginWith('local', { data: this.login })
-        this.$router.push('/')
+        this.$router.push(this.localePath('/'))
       } catch (err) {
         console.log(err)
       }

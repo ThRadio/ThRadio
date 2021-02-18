@@ -20,17 +20,17 @@
                   </template>
 
                   <v-list>
-                    <v-list-item :to="`/stations/edit/${station._id}`">
+                    <v-list-item :to="localePath(`/stations/edit/${station._id}`)">
                       <v-list-item-icon>
                         <v-icon dense> mdi-pencil </v-icon>
                       </v-list-item-icon>
-                      <v-list-item-title>Edit</v-list-item-title>
+                      <v-list-item-title>{{ $t('edit') }}</v-list-item-title>
                     </v-list-item>
                     <v-list-item @click="remove">
                       <v-list-item-icon>
                         <v-icon dense> mdi-delete </v-icon>
                       </v-list-item-icon>
-                      <v-list-item-title>Remove</v-list-item-title>
+                      <v-list-item-title>{{ $t('remove') }}</v-list-item-title>
                     </v-list-item>
                   </v-list>
                 </v-menu>
@@ -59,7 +59,9 @@
                     <v-icon color="primary"> mdi-card-text </v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Description</v-list-item-title>
+                    <v-list-item-title>{{
+                      $t('description')
+                    }}</v-list-item-title>
                     <v-list-item-subtitle>{{
                       station.description
                     }}</v-list-item-subtitle>
@@ -75,7 +77,7 @@
                     </v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Genre</v-list-item-title>
+                    <v-list-item-title>{{ $t('genre') }}</v-list-item-title>
                     <v-list-item-subtitle>{{
                       station.genre
                     }}</v-list-item-subtitle>
@@ -89,7 +91,9 @@
                     <v-icon color="primary"> mdi-radio </v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Maximum listeners</v-list-item-title>
+                    <v-list-item-title>{{
+                      $t('maximum_listeners')
+                    }}</v-list-item-title>
                     <v-list-item-subtitle>{{
                       station.listeners
                     }}</v-list-item-subtitle>
@@ -101,7 +105,9 @@
 
           <v-col cols="12">
             <v-card>
-              <v-card-title primary-title> Statistics </v-card-title>
+              <v-card-title primary-title>
+                {{ $t('statistics') }}
+              </v-card-title>
 
               <v-list two-line>
                 <v-list-item>
@@ -109,7 +115,7 @@
                     <v-icon color="primary"> mdi-radio </v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Listeners</v-list-item-title>
+                    <v-list-item-title>{{ $t('listeners') }}</v-list-item-title>
                     <v-list-item-subtitle>{{
                       statistics.listeners
                     }}</v-list-item-subtitle>
@@ -123,7 +129,9 @@
                     <v-icon color="primary"> mdi-trending-up </v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Listeners peak</v-list-item-title>
+                    <v-list-item-title>{{
+                      $t('listeners_peak')
+                    }}</v-list-item-title>
                     <v-list-item-subtitle>{{
                       statistics.listeners_peak
                     }}</v-list-item-subtitle>
@@ -140,7 +148,7 @@
           <v-app-bar flat color="rgba(0, 0, 0, 0)">
             <v-toolbar-title class="title white--text pl-0">
               Icecast connection ({{
-                station.state == 20 ? 'Running' : 'Stopped'
+                station.state == 20 ? $t('running') : $t('stopped')
               }})
             </v-toolbar-title>
 
@@ -158,19 +166,19 @@
                   <v-list-item-icon>
                     <v-icon dense> mdi-play-circle-outline </v-icon>
                   </v-list-item-icon>
-                  <v-list-item-title>Start</v-list-item-title>
+                  <v-list-item-title>{{ $t('start') }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="restart" v-if="station.state == 20">
                   <v-list-item-icon>
                     <v-icon dense> mdi-restart </v-icon>
                   </v-list-item-icon>
-                  <v-list-item-title>Restart</v-list-item-title>
+                  <v-list-item-title>{{ $t('restart') }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="stop" v-if="station.state == 20">
                   <v-list-item-icon>
                     <v-icon dense> mdi-stop-circle-outline </v-icon>
                   </v-list-item-icon>
-                  <v-list-item-title>Stop</v-list-item-title>
+                  <v-list-item-title>{{ $t('stop') }}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -209,7 +217,9 @@
               </v-list-item-icon>
 
               <v-list-item-content>
-                <v-list-item-title>Administration URL</v-list-item-title>
+                <v-list-item-title>{{
+                  $t('administration_url')
+                }}</v-list-item-title>
                 <v-list-item-subtitle
                   >{{ $store.getters.config.url_base }}:{{
                     station.icecast_port
@@ -236,26 +246,7 @@
               </v-list-item-icon>
 
               <v-list-item-content>
-                <v-list-item-title>Administrator password</v-list-item-title>
-                <v-list-item-subtitle>{{
-                  station.icecast_password
-                }}</v-list-item-subtitle>
-              </v-list-item-content>
-
-              <v-list-item-icon @click="copy(station.icecast_password)">
-                <v-icon>mdi-clipboard-text-multiple</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-
-            <v-divider></v-divider>
-
-            <v-list-item>
-              <v-list-item-icon>
-                <v-icon color="primary"> mdi-lock-outline </v-icon>
-              </v-list-item-icon>
-
-              <v-list-item-content>
-                <v-list-item-title>Source password</v-list-item-title>
+                <v-list-item-title>{{ $t('password') }}</v-list-item-title>
                 <v-list-item-subtitle>{{
                   station.icecast_password
                 }}</v-list-item-subtitle>
@@ -273,7 +264,7 @@
                 <v-icon color="primary"> mdi-airplane </v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title>Port</v-list-item-title>
+                <v-list-item-title>{{ $t('port') }}</v-list-item-title>
                 <v-list-item-subtitle>{{
                   station.icecast_port
                 }}</v-list-item-subtitle>
@@ -291,7 +282,7 @@
               </v-list-item-icon>
 
               <v-list-item-content>
-                <v-list-item-title>Mount point</v-list-item-title>
+                <v-list-item-title>{{ $t('mount_point') }}</v-list-item-title>
                 <v-list-item-subtitle>/radio.mp3</v-list-item-subtitle>
               </v-list-item-content>
 

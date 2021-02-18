@@ -4,11 +4,11 @@
       <!-- Title -->
       <template #title>
         <v-app-bar flat color="rgba(0, 0, 0, 0)">
-          <v-btn :to="`/stations/${station._id}`" icon>
+          <v-btn :to="localePath(`/stations/${station._id}`)" icon>
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
           <v-toolbar-title class="title white--text pl-0">
-            Edit station
+            {{ $t('edit_station') }}
           </v-toolbar-title>
         </v-app-bar>
       </template>
@@ -21,8 +21,8 @@
           :complete="!$v.information.$invalid"
           step="1"
         >
-          Information
-          <small v-if="$v.information.$invalid">Incomplete</small>
+          {{ $t('information') }}
+          <small v-if="$v.information.$invalid">{{ $t('incomplete') }}</small>
         </v-stepper-step>
       </template>
 
@@ -34,7 +34,7 @@
           step="2"
         >
           Icecast
-          <small v-if="$v.icecast.$invalid">Incomplete</small>
+          <small v-if="$v.icecast.$invalid">{{ $t('incomplete') }}</small>
         </v-stepper-step>
       </template>
 
@@ -46,7 +46,7 @@
               <v-text-field
                 v-model="information.name"
                 dense
-                label="Name"
+                :label="$t('name')"
                 outlined
                 block
                 @input="$v.information.name.$touch()"
@@ -57,8 +57,8 @@
                 v-model="information.description"
                 outlined
                 dense
-                label="Description"
-                hint="Optional"
+                :label="$t('description')"
+                :hint="$t('optional')"
                 @input="$v.information.description.$touch()"
                 @blur="$v.information.description.$touch()"
               ></v-textarea>
@@ -68,8 +68,8 @@
                 outlined
                 dense
                 block
-                label="Genre"
-                hint="Optional"
+                :label="$t('genre')"
+                :hint="$t('optional')"
                 @input="$v.information.genre.$touch()"
                 @blur="$v.information.genre.$touch()"
               ></v-text-field>
@@ -85,7 +85,7 @@
               <v-text-field
                 v-model="icecast.password"
                 dense
-                label="Password icecast"
+                :label="$t('password')"
                 outlined
                 block
                 @input="$v.icecast.password.$touch()"
@@ -95,7 +95,7 @@
               <v-text-field
                 v-model="icecast.port"
                 dense
-                label="Port icecast"
+                :label="$t('port')"
                 outlined
                 block
                 @input="$v.icecast.port.$touch()"
@@ -107,8 +107,8 @@
                 outlined
                 dense
                 block
-                label="Maximum listeners"
-                hint="Optional (Default 250)"
+                :label="$t('maximum_listeners')"
+                :hint="`${$t('optional')} (${$t('default')} 250)`"
                 @input="$v.icecast.listeners.$touch()"
                 @blur="$v.icecast.listeners.$touch()"
               ></v-text-field>
@@ -126,7 +126,7 @@
       @click="edit"
     >
       <v-icon left>mdi-pencil</v-icon>
-      Edit station
+      {{ $t('edit_station') }}
     </v-btn>
 
     <v-overlay :value="loading">
@@ -143,7 +143,7 @@
   @Component({
     head(this: EditStationPage): object {
       return {
-        title: `Edit ${this.station.name}`,
+        title: `${this.$t('edit')} ${this.station.name}`,
       }
     },
   })
@@ -205,7 +205,7 @@
         listeners:
           this.icecast.listeners !== '' ? Number(this.icecast.listeners) : 250,
       })
-      this.$router.push(`/stations/${this.$route.params.id}`)
+      this.$router.push(this.localePath(`/stations/${this.$route.params.id}`))
     }
   }
 </script>

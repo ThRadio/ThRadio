@@ -3,13 +3,13 @@
     <Stepper :value="step" :steps="2">
       <!-- Title -->
       <template #title>
-        <v-card-title primary-title> Add station </v-card-title>
+        <v-card-title primary-title> {{ $t('add_station') }} </v-card-title>
       </template>
 
       <!-- Titles steps -->
       <template #step-1>
         <v-stepper-step :complete="step > 1" step="1">
-          Information
+          {{ $t('information') }}
         </v-stepper-step>
       </template>
 
@@ -25,7 +25,7 @@
               <v-text-field
                 v-model="information.name"
                 dense
-                label="Name"
+                :label="$t('name')"
                 outlined
                 block
                 @input="$v.information.name.$touch()"
@@ -36,8 +36,8 @@
                 v-model="information.description"
                 outlined
                 dense
-                label="Description"
-                hint="Optional"
+                :label="$t('description')"
+                :hint="$t('optional')"
                 @input="$v.information.description.$touch()"
                 @blur="$v.information.description.$touch()"
               ></v-textarea>
@@ -47,8 +47,8 @@
                 outlined
                 dense
                 block
-                label="Genre"
-                hint="Optional"
+                :label="$t('genre')"
+                :hint="$t('optional')"
                 @input="$v.information.genre.$touch()"
                 @blur="$v.information.genre.$touch()"
               ></v-text-field>
@@ -61,7 +61,7 @@
                 @click="step = 2"
               >
                 <v-icon left>mdi-arrow-right</v-icon>
-                Continue
+                {{ $t('continue') }}
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -75,7 +75,7 @@
               <v-text-field
                 v-model="icecast.password"
                 dense
-                label="Password icecast"
+                :label="$t('password')"
                 outlined
                 block
                 @input="$v.icecast.password.$touch()"
@@ -85,7 +85,7 @@
               <v-text-field
                 v-model="icecast.port"
                 dense
-                label="Port icecast"
+                :label="$t('port')"
                 outlined
                 block
                 @input="$v.icecast.port.$touch()"
@@ -97,8 +97,8 @@
                 outlined
                 dense
                 block
-                label="Maximum listeners"
-                hint="Optional (Default 250)"
+                :label="$t('maximum_listeners')"
+                :hint="`${$t('optional')} (${$t('default')} 250)`"
                 @input="$v.icecast.listeners.$touch()"
                 @blur="$v.icecast.listeners.$touch()"
               ></v-text-field>
@@ -107,12 +107,12 @@
             <v-card-actions class="pa-0 pt-2">
               <v-btn outlined color="primary" @click="step = 1">
                 <v-icon left>mdi-arrow-left</v-icon>
-                Back
+                {{ $t('back') }}
               </v-btn>
 
               <v-btn color="primary" :disabled="$v.$invalid" @click="add">
                 <v-icon left>mdi-plus-circle</v-icon>
-                Add station
+                {{ $t('add_station') }}
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -132,8 +132,10 @@
   import { required, numeric } from 'vuelidate/lib/validators'
 
   @Component({
-    head: {
-      title: 'Add station',
+    head(this: AddStationPage): object {
+      return {
+        title: this.$t('add_station'),
+      }
     },
   })
   export default class AddStationPage extends Vue {
@@ -176,7 +178,7 @@
         listeners:
           this.icecast.listeners !== '' ? Number(this.icecast.listeners) : 250,
       })
-      this.$router.push(`/stations/${station._id}`)
+      this.$router.push(this.localePath(`/stations/${station._id}`))
     }
   }
 </script>

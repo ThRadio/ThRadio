@@ -47,6 +47,7 @@ export default {
   ],
 
   i18n: {
+    strategy: 'no_prefix',
     seo: true,
     langDir: 'locales/',
     locales: [
@@ -59,9 +60,6 @@ export default {
       useCookie: true,
       cookieKey: 'i18n_redirected',
     },
-    vueI18n: {
-      fallbackLocale: ['en', 'es'],
-    }
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

@@ -22,7 +22,7 @@
           @click="logout"
         >
           <v-icon left>mdi-logout-variant</v-icon>
-          Log out
+          {{ $t('logout') }}
         </v-btn>
       </div>
 
@@ -69,13 +69,13 @@
     items = [
       {
         icon: 'mdi-home',
-        title: 'Home',
-        to: '/',
+        title: this.$t('home'),
+        to: this.localePath('/'),
       },
       {
         icon: 'mdi-cog-outline',
-        title: 'Config',
-        to: '/config',
+        title: this.$t('configuration'),
+        to: this.localePath('/config'),
       },
     ]
 

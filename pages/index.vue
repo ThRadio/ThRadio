@@ -3,12 +3,12 @@
     <v-card>
       <v-app-bar flat color="rgba(0, 0, 0, 0)">
         <v-toolbar-title class="title white--text pl-0">
-          Stations
+          {{ $t('stations') }}
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
 
-        <v-btn to="/stations/add" icon>
+        <v-btn :to="localePath('/stations/add')" icon>
           <v-icon>mdi-plus-circle</v-icon>
         </v-btn>
       </v-app-bar>
@@ -16,17 +16,17 @@
         <template #default>
           <thead>
             <tr>
-              <th class="text-left">Name</th>
-              <th class="text-left">Actions</th>
+              <th class="text-left">{{ $t('name') }}</th>
+              <th class="text-left">{{ $t('actions') }}</th>
             </tr>
           </thead>
           <tbody>
             <tr v-if="!stations.length">
-              <td>Not found</td>
+              <td>{{ $t('not_found') }}</td>
               <td>
-                <v-btn to="/stations/add" dark plain>
+                <v-btn :to="localePath('/stations/add')" dark plain>
                   <v-icon left>mdi-plus-circle</v-icon>
-                  Add new station
+                  {{ $t('add_station') }}
                 </v-btn>
               </td>
             </tr>
@@ -45,17 +45,19 @@
                   </template>
 
                   <v-list>
-                    <v-list-item :to="`/stations/edit/${station._id}`">
+                    <v-list-item
+                      :to="localePath(`/stations/edit/${station._id}`)"
+                    >
                       <v-list-item-icon>
                         <v-icon dense> mdi-pencil </v-icon>
                       </v-list-item-icon>
-                      <v-list-item-title>Edit</v-list-item-title>
+                      <v-list-item-title>{{ $t('edit') }}</v-list-item-title>
                     </v-list-item>
                     <v-list-item @click="remove(station._id)">
                       <v-list-item-icon>
                         <v-icon dense> mdi-delete </v-icon>
                       </v-list-item-icon>
-                      <v-list-item-title>Remove</v-list-item-title>
+                      <v-list-item-title>{{ $t('remove') }}</v-list-item-title>
                     </v-list-item>
                   </v-list>
                 </v-menu>
@@ -76,8 +78,10 @@
   import { Component, Vue } from 'nuxt-property-decorator'
 
   @Component({
-    head: {
-      title: 'Home',
+    head(this: HomePage): object {
+      return {
+        title: this.$t('home'),
+      }
     },
   })
   export default class HomePage extends Vue {
@@ -95,7 +99,7 @@
     }
 
     go(id: string) {
-      this.$router.push('./stations/' + id)
+      this.$router.push(this.localePath('/stations/' + id))
     }
   }
 </script>
