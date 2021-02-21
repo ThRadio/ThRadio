@@ -26,6 +26,9 @@
   "logout": "Cerrar sesión",
   "maximum_listeners": "Máximo de oyentes",
   "mount_point": "Punto de montaje",
+  "msg_change_password": "Deje en blanco para permanecer con la contraseña actual.",
+  "msg_password": "Guarde esta contraseña",
+  "msg_station_user": "¿Desea agregar un usuario para administrar esta estación?",
   "msg_success": "Actualizado correctamente",
   "msg_update": "Nueva actualización disponible siga las instrucciones para actualizar",
   "name": "Nombre",
@@ -44,5 +47,6 @@
   "stopped": "Detenido",
   "update": "Actualizar",
   "url_base": "URL base del sitio",
+  "user": "Usuario",
   "username": "Nombre de usuario"
 }

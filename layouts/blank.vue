@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <v-main>
-      <v-container class="fill-height" fluid>
+      <v-container class="fill-height">
         <nuxt />
       </v-container>
     </v-main>

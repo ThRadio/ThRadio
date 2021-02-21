@@ -4604,6 +4604,11 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
+generate-password@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/generate-password/-/generate-password-1.6.0.tgz#9dff4fcca7f831e6832d464509910fab333d0323"
+  integrity sha512-YUJTQkApkLT/fru0QdYWP0lVZdPKhF5kXCP24sgI4gR/vFMJFopCj5t1+9FAKIYcML/nxzx2PMkA1ymO1FC+tQ==
+
 gensync@^1.0.0-beta.1:
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"

@@ -17,6 +17,7 @@
     "@nuxtjs/proxy": "^2.1.0",
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.8.3",
+    "generate-password": "^1.6.0",
     "nuxt": "^2.14.12",
     "nuxt-clipboard": "^0.0.2",
     "nuxt-i18n": "^6.20.1",

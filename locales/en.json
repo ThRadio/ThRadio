@@ -26,6 +26,9 @@
   "logout": "Log out",
   "maximum_listeners": "Maximum listeners",
   "mount_point": "Mount point",
+  "msg_change_password": "Leave blank to remain with the current password.",
+  "msg_password": "Please save this password",
+  "msg_station_user": "Do you want to add a user to manage this station?",
   "msg_success": "Successfully update",
   "msg_update": "New update available follow the instructions to update",
   "name": "Name",
@@ -44,5 +47,6 @@
   "stopped": "Stopped",
   "update": "Update",
   "url_base": "Base URL of the site",
+  "user": "User",
   "username": "Username"
 }
