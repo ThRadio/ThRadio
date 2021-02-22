@@ -314,7 +314,7 @@
 
     newCheck() {
       if (!this.station.user) this.user.new = true
-      else if (!this.user.active) this.user.new = false
+      if (!this.user.active) this.user.new = false
     }
   }
 </script>
