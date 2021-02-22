@@ -12,22 +12,9 @@ ThRadio will always be available free of charge, but if you find the software us
 
 [![buymeacoffee](https://img.buymeacoffee.com/button-api/?slug=therhenals&button_colour=FFDD00&font_colour=000000&font_family=Poppins&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/therhenals)
 
-## Install
+## Docs
 
-ThRadio is powered by Docker and uses pre-built images that contain every component of the software
-
-```bash
-# Pick a base directory on your host computer that ThRadio can use. If you're on Linux, you can follow the steps below to use the recommended directory:
-
-$ mkdir -p /var/thradio
-$ cd /var/thradio
-
-# Use these commands to download our Docker Utility Script, set it as executable and then run the Docker installation process:
-
-$ curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/thradio.sh > thradio.sh
-$ chmod a+x thradio.sh
-$ ./thradio.sh install
-```
+Follow our **[installation guide](https://thradio.therhenals.com/getting-started/installation)** for instructions on how to install ThRadio on your own server.
 
 **ThRadio is currently in alpha.** If you use it in production, it is at your own risk.
 
