@@ -20,7 +20,7 @@
       </v-col>
       <v-col cols="12" md="3" class="shrink">
         <v-btn
-          href="https://bit.ly/thradio-update"
+          href="https://rebrand.ly/thradio-update"
           target="blank"
           color="primary"
           block
