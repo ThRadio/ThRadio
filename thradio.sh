@@ -167,6 +167,10 @@ envfile-set() {
   .env set "${1}=${VALUE}"
 }
 
+setup-letsencrypt() {
+  envfile-set "SITE_ADDRESS" "" "Optional: Domain name (example.com) or names (example.com,foo.bar) to use with LetsEncrypt"
+}
+
 install() {
   if [[ ! $(command -v curl) ]]; then
     echo "cURL does not appear to be installed."
@@ -243,7 +247,9 @@ install() {
   )
   sed -i "s/super_secret/${SECRET}/g" .env
 
-  envfile-set "SITE_ADDRESS" "localhost" "Optional: Domain name (example.com) or names (example.com,foo.bar) to use with LetsEncrypt"
+  if ask "Set up LetsEncrypt?" N; then
+    setup-letsencrypt
+  fi
 
   docker-compose pull
   docker-compose up -d
@@ -341,6 +347,22 @@ update() {
   fi
 
   echo "Update complete!"
+  exit
+}
+
+update-self() {
+  curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/thradio.sh -o thradio.sh
+  chmod a+x thradio.sh
+
+  echo "New Docker utility script downloaded."
+  exit
+}
+
+letsencrypt-create() {
+  setup-letsencrypt
+
+  docker-compose down
+  docker-compose up -d
   exit
 }
 
