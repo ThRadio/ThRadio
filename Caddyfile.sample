@@ -1,4 +1,4 @@
-{$SITE_ADDRESS:localhost} {
+{$SITE_ADDRESS::80} {
     @radio {
         path_regexp radio /radio/(.*)/(.*)$
     }
