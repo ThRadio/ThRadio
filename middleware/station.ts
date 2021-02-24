@@ -6,7 +6,6 @@ const station: Middleware = async (context) => {
     if (context.route.path !== `/stations/${user.station}`) {
       context.redirect(`/stations/${user.station}`)
     }
-
 }
 
 export default station

@@ -83,7 +83,12 @@
       try {
         this.loading = true
         await this.$auth.loginWith('local', { data: this.login })
-        this.$router.push(this.localePath('/'))
+        if (this.$auth.hasScope('admin'))
+          await this.$router.push(this.localePath('/'))
+        else
+          await this.$router.push(
+            this.localePath(`/stations/${this.$auth.user?.station}`)
+          )
       } catch (err) {
         console.log(err)
       }

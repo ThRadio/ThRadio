@@ -119,6 +119,9 @@ export default {
     middleware: ['completed', 'auth', 'station'],
   },
   auth: {
+    redirect: {
+      home: false,
+    },
     strategies: {
       local: {
         scheme: 'refresh',
@@ -133,7 +136,6 @@ export default {
         },
         user: {
           property: false,
-          // autoFetch: true
         },
         endpoints: {
           login: { url: '/api/auth/login', method: 'post' },
