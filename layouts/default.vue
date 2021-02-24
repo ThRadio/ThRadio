@@ -82,7 +82,7 @@
         to: this.localePath(`/stations/${this.$auth?.user?.station}`),
       },
       {
-        icon: 'mdi-cog-outline',
+        icon: 'mdi-account-edit',
         title: 'profile',
         to: this.localePath('/profile'),
       },
