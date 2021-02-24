@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 
-  @Component
-  export default class BlankLayout extends Vue {}
+@Component
+export default class BlankLayout extends Vue {}
 </script>

@@ -164,19 +164,19 @@
               </template>
 
               <v-list>
-                <v-list-item @click="start" v-if="station.state == 0">
+                <v-list-item v-if="station.state == 0" @click="start">
                   <v-list-item-icon>
                     <v-icon dense> mdi-play-circle-outline </v-icon>
                   </v-list-item-icon>
                   <v-list-item-title>{{ $t('start') }}</v-list-item-title>
                 </v-list-item>
-                <v-list-item @click="restart" v-if="station.state == 20">
+                <v-list-item v-if="station.state == 20" @click="restart">
                   <v-list-item-icon>
                     <v-icon dense> mdi-restart </v-icon>
                   </v-list-item-icon>
                   <v-list-item-title>{{ $t('restart') }}</v-list-item-title>
                 </v-list-item>
-                <v-list-item @click="stop" v-if="station.state == 20">
+                <v-list-item v-if="station.state == 20" @click="stop">
                   <v-list-item-icon>
                     <v-icon dense> mdi-stop-circle-outline </v-icon>
                   </v-list-item-icon>
@@ -314,88 +314,89 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 
-  @Component({
-    head(this: StationPage): object {
-      return {
-        title: this.station.name,
-      }
-    },
-  })
-  export default class StationPage extends Vue {
-    interval: any
-    station: any
-    statistics: any
-    loading = false
-    $copyText: any
-    snackbar = {
-      show: false,
-      text: '',
+@Component({
+  head(this: StationPage): object {
+    return {
+      title: this.station.name,
     }
-    options = {
-      controls: ['play', 'mute', 'volume'],
-    }
-
-    async asyncData({ $axios, params }: any) {
-      const station = await $axios.$get(`/api/stations/${params.id}`)
-      const statistics = await $axios.$get(
-        `/api/stations/statistics/${params.id}`
-      )
-      return { station, statistics }
-    }
-
-    mounted() {
-      this.interval = window.setInterval(async () => {
-        const statistics = await this.$axios.$get(
-          `/api/stations/statistics/${this.station._id}`,
-          { progress: false }
-        )
-        this.statistics = statistics
-      }, 10000)
-    }
-
-    destroyed() {
-      window.clearInterval(this.interval)
-    }
-
-    async remove() {
-      this.loading = true
-      await this.$axios.$delete(`/api/stations/${this.station._id}`)
-      this.$router.push('/')
-    }
-
-    async copy(text: string) {
-      await this.$copyText(text)
-      this.snackbar.show = true
-      this.snackbar.text = 'Successfully copied'
-    }
-
-    async start() {
-      this.loading = true
-      await this.$axios.$get(`/api/stations/start/${this.station._id}`)
-      await this.$nuxt.refresh()
-      this.loading = false
-    }
-
-    async restart() {
-      this.loading = true
-      await this.$axios.$get(`/api/stations/restart/${this.station._id}`)
-      await this.$nuxt.refresh()
-      this.loading = false
-    }
-
-    async stop() {
-      this.loading = true
-      await this.$axios.$get(`/api/stations/stop/${this.station._id}`)
-      await this.$nuxt.refresh()
-      this.loading = false
-    }
+  },
+})
+export default class StationPage extends Vue {
+  interval: any
+  station: any
+  statistics: any
+  loading = false
+  $copyText: any
+  snackbar = {
+    show: false,
+    text: '',
   }
+
+  options = {
+    controls: ['play', 'mute', 'volume'],
+  }
+
+  async asyncData({ $axios, params }: any) {
+    const station = await $axios.$get(`/api/stations/${params.id}`)
+    const statistics = await $axios.$get(
+      `/api/stations/statistics/${params.id}`
+    )
+    return { station, statistics }
+  }
+
+  mounted() {
+    this.interval = window.setInterval(async () => {
+      const statistics = await this.$axios.$get(
+        `/api/stations/statistics/${this.station._id}`,
+        { progress: false }
+      )
+      this.statistics = statistics
+    }, 10000)
+  }
+
+  destroyed() {
+    window.clearInterval(this.interval)
+  }
+
+  async remove() {
+    this.loading = true
+    await this.$axios.$delete(`/api/stations/${this.station._id}`)
+    this.$router.push('/')
+  }
+
+  async copy(text: string) {
+    await this.$copyText(text)
+    this.snackbar.show = true
+    this.snackbar.text = 'Successfully copied'
+  }
+
+  async start() {
+    this.loading = true
+    await this.$axios.$get(`/api/stations/start/${this.station._id}`)
+    await this.$nuxt.refresh()
+    this.loading = false
+  }
+
+  async restart() {
+    this.loading = true
+    await this.$axios.$get(`/api/stations/restart/${this.station._id}`)
+    await this.$nuxt.refresh()
+    this.loading = false
+  }
+
+  async stop() {
+    this.loading = true
+    await this.$axios.$get(`/api/stations/stop/${this.station._id}`)
+    await this.$nuxt.refresh()
+    this.loading = false
+  }
+}
 </script>
 
 <style>
-  .plyr {
-    border-radius: 10px;
-  }
+.plyr {
+  border-radius: 10px;
+}
 </style>

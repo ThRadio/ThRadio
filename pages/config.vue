@@ -53,55 +53,55 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'nuxt-property-decorator'
-  import { Validations } from 'vuelidate-property-decorators'
-  import { required } from 'vuelidate/lib/validators'
+import { Component, Vue } from 'nuxt-property-decorator'
+import { Validations } from 'vuelidate-property-decorators'
+import { required } from 'vuelidate/lib/validators'
 
-  @Component({
-    meta: {
-      admin: true,
-    },
-    head(this: ConfigPage): object {
-      return {
-        title: this.$t('configuration'),
-      }
-    },
-  })
-  export default class ConfigPage extends Vue {
-    loading = false
-    name: string = ''
-    urlBase: string = ''
-
-    snackbar = {
-      show: false,
-      text: '',
+@Component({
+  meta: {
+    admin: true,
+  },
+  head(this: ConfigPage): object {
+    return {
+      title: this.$t('configuration'),
     }
+  },
+})
+export default class ConfigPage extends Vue {
+  loading = false
+  name: string = ''
+  urlBase: string = ''
 
-    @Validations()
-    validations = {
-      name: { required },
-      urlBase: { required },
-    }
+  snackbar = {
+    show: false,
+    text: '',
+  }
 
-    mounted() {
-      this.name = this.$store.getters.config.name
-      this.urlBase = this.$store.getters.config.url_base
-    }
+  @Validations()
+  validations = {
+    name: { required },
+    urlBase: { required },
+  }
 
-    async update() {
-      try {
-        this.loading = true
-        await this.$axios.$put('/api/app/config', {
-          name: this.name,
-          url_base: this.urlBase,
-        })
-        this.loading = false
-        await this.$store.dispatch('getConfig')
-        this.snackbar.show = true
-        this.snackbar.text = this.$t('msg_success').toString()
-      } catch (err) {
-        console.log(err)
-      }
+  mounted() {
+    this.name = this.$store.getters.config.name
+    this.urlBase = this.$store.getters.config.url_base
+  }
+
+  async update() {
+    try {
+      this.loading = true
+      await this.$axios.$put('/api/app/config', {
+        name: this.name,
+        url_base: this.urlBase,
+      })
+      this.loading = false
+      await this.$store.dispatch('getConfig')
+      this.snackbar.show = true
+      this.snackbar.text = this.$t('msg_success').toString()
+    } catch (err) {
+      console.log(err)
     }
   }
+}
 </script>

@@ -73,60 +73,60 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'nuxt-property-decorator'
-  import { Validations } from 'vuelidate-property-decorators'
-  import { required } from 'vuelidate/lib/validators'
+import { Component, Vue } from 'nuxt-property-decorator'
+import { Validations } from 'vuelidate-property-decorators'
+import { required } from 'vuelidate/lib/validators'
 
-  @Component({
-    head(this: ProfilePage): object {
-      return {
-        title: this.$t('profile'),
-      }
-    },
-  })
-  export default class ProfilePage extends Vue {
-    loading = false
-    name: string = ''
-    username: string = ''
-    email: string = ''
-    password: string = ''
-
-    snackbar = {
-      show: false,
-      text: '',
+@Component({
+  head(this: ProfilePage): object {
+    return {
+      title: this.$t('profile'),
     }
+  },
+})
+export default class ProfilePage extends Vue {
+  loading = false
+  name: string = ''
+  username: string = ''
+  email: string = ''
+  password: string = ''
 
-    @Validations()
-    validations = {
-      name: { required },
-      username: { required },
-      email: {required},
-      password: {}
-    }
+  snackbar = {
+    show: false,
+    text: '',
+  }
 
-    mounted() {
-      const user: any = this.$auth?.user
-      this.name = user.name
-      this.username = user.username
-      this.email = user.email
-    }
+  @Validations()
+  validations = {
+    name: { required },
+    username: { required },
+    email: { required },
+    password: {},
+  }
 
-    async update() {
-      try {
-        this.loading = true
-        await this.$axios.$put('/api/auth/me', {
-          name: this.name,
-          username: this.username,
-          email: this.email,
-          password: this.password
-        })
-        this.loading = false
-        await this.$auth.fetchUser()
-        this.snackbar.show = true
-        this.snackbar.text = this.$t('msg_success').toString()
-      } catch (err) {
-        console.log(err)
-      }
+  mounted() {
+    const user: any = this.$auth?.user
+    this.name = user.name
+    this.username = user.username
+    this.email = user.email
+  }
+
+  async update() {
+    try {
+      this.loading = true
+      await this.$axios.$put('/api/auth/me', {
+        name: this.name,
+        username: this.username,
+        email: this.email,
+        password: this.password,
+      })
+      this.loading = false
+      await this.$auth.fetchUser()
+      this.snackbar.show = true
+      this.snackbar.text = this.$t('msg_success').toString()
+    } catch (err) {
+      console.log(err)
     }
   }
+}
 </script>

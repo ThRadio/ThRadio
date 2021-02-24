@@ -106,37 +106,37 @@
 </template>
 
 <script lang="ts">
-  import * as semver from 'semver'
-  import { Component, Vue } from 'nuxt-property-decorator'
+import * as semver from 'semver'
+import { Component, Vue } from 'nuxt-property-decorator'
 
-  @Component({
-    meta: {
-      admin: true,
-    },
-    head(this: HomePage): object {
-      return {
-        title: this.$t('home'),
-      }
-    },
-  })
-  export default class HomePage extends Vue {
-    semver = semver
-    loading = false
-    async asyncData({ $axios }: any) {
-      const stations = await $axios.$get('/api/stations')
-      const info = await $axios.$get('/api/app/info')
-      return { stations, info }
+@Component({
+  meta: {
+    admin: true,
+  },
+  head(this: HomePage): object {
+    return {
+      title: this.$t('home'),
     }
-
-    async remove(id: string) {
-      this.loading = true
-      await this.$axios.$delete(`/api/stations/${id}`)
-      await this.$nuxt.refresh()
-      this.loading = false
-    }
-
-    go(id: string) {
-      this.$router.push(this.localePath('/stations/' + id))
-    }
+  },
+})
+export default class HomePage extends Vue {
+  semver = semver
+  loading = false
+  async asyncData({ $axios }: any) {
+    const stations = await $axios.$get('/api/stations')
+    const info = await $axios.$get('/api/app/info')
+    return { stations, info }
   }
+
+  async remove(id: string) {
+    this.loading = true
+    await this.$axios.$delete(`/api/stations/${id}`)
+    await this.$nuxt.refresh()
+    this.loading = false
+  }
+
+  go(id: string) {
+    this.$router.push(this.localePath('/stations/' + id))
+  }
+}
 </script>

@@ -30,13 +30,12 @@
   </div>
 </template>
 
-
 <script lang="ts">
-  import { Component, Vue, Prop, VModel } from 'nuxt-property-decorator'
+import { Component, Vue, Prop, VModel } from 'nuxt-property-decorator'
 
-  @Component
-  export default class StepperComponent extends Vue {
-    @VModel({ type: Number }) step!: number
-    @Prop(Number) readonly steps: number | undefined
-  }
+@Component
+export default class StepperComponent extends Vue {
+  @VModel({ type: Number }) step!: number
+  @Prop(Number) readonly steps: number | undefined
+}
 </script>

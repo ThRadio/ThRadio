@@ -63,40 +63,40 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 
-  @Component
-  export default class DefaultLayout extends Vue {
-    drawer = null
-    items = [
-      {
-        icon: 'mdi-home',
-        title: 'home',
-        scope: 'admin',
-        to: this.localePath('/'),
-      },
-      {
-        icon: 'mdi-home',
-        title: 'home',
-        scope: 'station',
-        to: this.localePath(`/stations/${this.$auth?.user?.station}`),
-      },
-      {
-        icon: 'mdi-account-edit',
-        title: 'profile',
-        to: this.localePath('/profile'),
-      },
-      {
-        icon: 'mdi-cog-outline',
-        title: 'configuration',
-        scope: 'admin',
-        to: this.localePath('/config'),
-      },
-    ]
+@Component
+export default class DefaultLayout extends Vue {
+  drawer = null
+  items = [
+    {
+      icon: 'mdi-home',
+      title: 'home',
+      scope: 'admin',
+      to: this.localePath('/'),
+    },
+    {
+      icon: 'mdi-home',
+      title: 'home',
+      scope: 'station',
+      to: this.localePath(`/stations/${this.$auth?.user?.station}`),
+    },
+    {
+      icon: 'mdi-account-edit',
+      title: 'profile',
+      to: this.localePath('/profile'),
+    },
+    {
+      icon: 'mdi-cog-outline',
+      title: 'configuration',
+      scope: 'admin',
+      to: this.localePath('/config'),
+    },
+  ]
 
-    async logout() {
-      await this.$auth.logout()
-      this.$router.push('/login')
-    }
+  async logout() {
+    await this.$auth.logout()
+    this.$router.push('/login')
   }
+}
 </script>

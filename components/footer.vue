@@ -11,14 +11,14 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
-  @Component
-  export default class FooterComponent extends Vue {
-    @Prop(Boolean) readonly fixed: boolean | undefined
+@Component
+export default class FooterComponent extends Vue {
+  @Prop(Boolean) readonly fixed: boolean | undefined
 
-    go() {
-      window.open('https://therhenals.com', 'blank')
-    }
+  go() {
+    window.open('https://therhenals.com', 'blank')
   }
+}
 </script>

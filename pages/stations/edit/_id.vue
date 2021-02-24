@@ -38,7 +38,7 @@
         </v-stepper-step>
       </template>
 
-      <template #step-3 v-if="$auth.hasScope('admin')">
+      <template v-if="$auth.hasScope('admin')" #step-3>
         <v-stepper-step
           :rules="[() => !$v.user.$invalid]"
           editable
@@ -129,13 +129,13 @@
         </v-stepper-content>
       </template>
 
-      <template #content-3 v-if="$auth.hasScope('admin')">
+      <template v-if="$auth.hasScope('admin')" #content-3>
         <v-stepper-content step="3">
           <v-card flat color="transparent" class="mb-4">
             <v-card-text class="pa-0 pt-2">
               <v-checkbox
-                class="ml-2"
                 v-model="user.active"
+                class="ml-2"
                 :label="$t('msg_station_user')"
                 @input="$v.user.active.$touch()"
                 @blur="$v.user.active.$touch()"
@@ -182,7 +182,9 @@
                 :label="$t('password')"
                 outlined
                 block
-                :messages="user.new ? '' : $t('msg_change_password')"
+                :messages="
+                  user.new ? $t('msg_password') : $t('msg_change_password')
+                "
                 @input="$v.user.password.$touch()"
                 @blur="$v.user.password.$touch()"
               ></v-text-field>
@@ -210,111 +212,114 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'nuxt-property-decorator'
-  import { Validations } from 'vuelidate-property-decorators'
-  import { required, numeric, requiredIf, email } from 'vuelidate/lib/validators'
+import { Component, Vue } from 'nuxt-property-decorator'
+import { Validations } from 'vuelidate-property-decorators'
+import { required, numeric, requiredIf, email } from 'vuelidate/lib/validators'
 
-  @Component({
-    head(this: EditStationPage): object {
-      return {
-        title: `${this.$t('edit')} ${this.station.name}`,
-      }
+@Component({
+  head(this: EditStationPage): object {
+    return {
+      title: `${this.$t('edit')} ${this.station.name}`,
+    }
+  },
+})
+export default class EditStationPage extends Vue {
+  step = 1
+  station: any
+  information = {
+    name: '',
+    description: '',
+    genre: '',
+  }
+
+  icecast = {
+    password: '',
+    port: '',
+    listeners: '',
+  }
+
+  user = {
+    active: false,
+    new: false,
+    name: '',
+    email: '',
+    username: '',
+    password: '',
+  }
+
+  loading = false
+
+  @Validations()
+  validations = {
+    information: {
+      name: { required },
+      description: {},
+      genre: {},
     },
-  })
-  export default class EditStationPage extends Vue {
-    step = 1
-    station: any
-    information = {
-      name: '',
-      description: '',
-      genre: '',
-    }
-    icecast = {
-      password: '',
-      port: '',
-      listeners: '',
-    }
-    user = {
-      active: false,
-      new: false,
-      name: '',
-      email: '',
-      username: '',
-      password: '',
-    }
-    loading = false
+    icecast: {
+      password: { required },
+      port: { required, numeric },
+      listeners: { numeric },
+    },
+    user: {
+      active: { required },
+      new: { required },
+      username: { required: requiredIf('active') },
+      password: { required: requiredIf('new') },
+      email: { required: requiredIf('active'), email },
+      name: { required: requiredIf('active') },
+    },
+  }
 
-    @Validations()
-    validations = {
-      information: {
-        name: { required },
-        description: {},
-        genre: {},
-      },
-      icecast: {
-        password: { required },
-        port: { required, numeric },
-        listeners: { numeric },
-      },
-      user: {
-        active: { required },
-        new: { required },
-        username: { required: requiredIf('active') },
-        password: { required: requiredIf('new') },
-        email: { required: requiredIf('active'), email },
-        name: { required: requiredIf('active') },
-      },
-    }
+  async asyncData({ $axios, params }: any) {
+    const station = await $axios.$get(`/api/stations/${params.id}`)
+    return { station }
+  }
 
-    async asyncData({ $axios, params }: any) {
-      const station = await $axios.$get(`/api/stations/${params.id}`)
-      return { station }
+  mounted() {
+    this.information = {
+      name: this.station.name,
+      description: this.station.description,
+      genre: this.station.genre,
     }
-
-    mounted() {
-      this.information = {
-        name: this.station.name,
-        description: this.station.description,
-        genre: this.station.genre,
-      }
-      this.icecast = {
-        listeners: this.station.listeners,
-        password: this.station.icecast_password,
-        port: this.station.icecast_port,
-      }
-      if (this.station.user) {
-        this.user.active = true
-        this.user.name = this.station.user.name
-        this.user.email = this.station.user.email
-        this.user.username = this.station.user.username
-      }
+    this.icecast = {
+      listeners: this.station.listeners,
+      password: this.station.icecast_password,
+      port: this.station.icecast_port,
     }
-
-    async edit() {
-      this.loading = true
-      await this.$axios.$put(`/api/stations/${this.$route.params.id}`, {
-        name: this.information.name,
-        description: this.information.description,
-        genre: this.information.genre,
-        icecast_password: this.icecast.password,
-        icecast_port: Number(this.icecast.port),
-        listeners:
-          this.icecast.listeners !== '' ? Number(this.icecast.listeners) : 250,
-        user: this.user.active
-          ? {
-              name: this.user.name,
-              username: this.user.username,
-              email: this.user.email,
-              password: this.user.password,
-            }
-          : null,
-      })
-      this.$router.push(this.localePath(`/stations/${this.$route.params.id}`))
-    }
-
-    newCheck() {
-      if (!this.station.user) this.user.new = true
-      if (!this.user.active) this.user.new = false
+    if (this.station.user) {
+      this.user.active = true
+      this.user.name = this.station.user.name
+      this.user.email = this.station.user.email
+      this.user.username = this.station.user.username
     }
   }
+
+  async edit() {
+    this.loading = true
+    await this.$axios.$put(`/api/stations/${this.$route.params.id}`, {
+      name: this.information.name,
+      description: this.information.description,
+      genre: this.information.genre,
+      icecast_password: this.icecast.password,
+      icecast_port: Number(this.icecast.port),
+      listeners:
+        this.icecast.listeners !== '' ? Number(this.icecast.listeners) : 250,
+      user: this.user.active
+        ? {
+            name: this.user.name,
+            username: this.user.username,
+            email: this.user.email,
+            password: this.user.password,
+          }
+        : null,
+    })
+    this.$router.push(this.localePath(`/stations/${this.$route.params.id}`))
+  }
+
+  newCheck() {
+    if (!this.station.user) this.user.new = true
+    if (!this.user.active) this.user.new = false
+  }
+}
 </script>

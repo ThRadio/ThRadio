@@ -51,47 +51,47 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'nuxt-property-decorator'
-  import { Validations } from 'vuelidate-property-decorators'
-  import { required } from 'vuelidate/lib/validators'
+import { Component, Vue } from 'nuxt-property-decorator'
+import { Validations } from 'vuelidate-property-decorators'
+import { required } from 'vuelidate/lib/validators'
 
-  @Component({
-    auth: 'guest',
-    layout: 'blank',
-    head(this: LoginPage): object {
-      return {
-        title: this.$t('login'),
-      }
+@Component({
+  auth: 'guest',
+  layout: 'blank',
+  head(this: LoginPage): object {
+    return {
+      title: this.$t('login'),
+    }
+  },
+})
+export default class LoginPage extends Vue {
+  loading = false
+  login = {
+    username: '',
+    password: '',
+  }
+
+  @Validations()
+  validations = {
+    login: {
+      username: { required },
+      password: { required },
     },
-  })
-  export default class LoginPage extends Vue {
-    loading = false
-    login = {
-      username: '',
-      password: '',
-    }
+  }
 
-    @Validations()
-    validations = {
-      login: {
-        username: { required },
-        password: { required },
-      },
-    }
-
-    async userLogin() {
-      try {
-        this.loading = true
-        await this.$auth.loginWith('local', { data: this.login })
-        if (this.$auth.hasScope('admin'))
-          await this.$router.push(this.localePath('/'))
-        else
-          await this.$router.push(
-            this.localePath(`/stations/${this.$auth.user?.station}`)
-          )
-      } catch (err) {
-        console.log(err)
-      }
+  async userLogin() {
+    try {
+      this.loading = true
+      await this.$auth.loginWith('local', { data: this.login })
+      if (this.$auth.hasScope('admin'))
+        await this.$router.push(this.localePath('/'))
+      else
+        await this.$router.push(
+          this.localePath(`/stations/${this.$auth.user?.station}`)
+        )
+    } catch (err) {
+      console.log(err)
     }
   }
+}
 </script>
