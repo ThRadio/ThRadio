@@ -20,13 +20,15 @@
                   </template>
 
                   <v-list>
-                    <v-list-item :to="localePath(`/stations/edit/${station._id}`)">
+                    <v-list-item
+                      :to="localePath(`/stations/edit/${station._id}`)"
+                    >
                       <v-list-item-icon>
                         <v-icon dense> mdi-pencil </v-icon>
                       </v-list-item-icon>
                       <v-list-item-title>{{ $t('edit') }}</v-list-item-title>
                     </v-list-item>
-                    <v-list-item @click="remove">
+                    <v-list-item v-if="$auth.hasScope('admin')" @click="remove">
                       <v-list-item-icon>
                         <v-icon dense> mdi-delete </v-icon>
                       </v-list-item-icon>
@@ -338,7 +340,7 @@
     async asyncData({ $axios, params }: any) {
       const station = await $axios.$get(`/api/stations/${params.id}`)
       const statistics = await $axios.$get(
-        `/api/stations/statistics/${station.icecast_port}`
+        `/api/stations/statistics/${params.id}`
       )
       return { station, statistics }
     }
@@ -346,7 +348,7 @@
     mounted() {
       this.interval = window.setInterval(async () => {
         const statistics = await this.$axios.$get(
-          `/api/stations/statistics/${this.station.icecast_port}`,
+          `/api/stations/statistics/${this.station._id}`,
           { progress: false }
         )
         this.statistics = statistics

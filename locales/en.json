@@ -36,6 +36,7 @@
   "optional": "Optional",
   "password": "Password",
   "port": "Port",
+  "profile": "Profile",
   "remove": "Remove",
   "restart": "Restart",
   "running": "Running",

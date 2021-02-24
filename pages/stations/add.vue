@@ -217,6 +217,9 @@
   import * as password from 'generate-password'
 
   @Component({
+    meta: {
+      admin: true,
+    },
     head(this: AddStationPage): object {
       return {
         title: this.$t('add_station'),

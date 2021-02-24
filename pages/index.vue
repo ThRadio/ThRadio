@@ -110,6 +110,9 @@
   import { Component, Vue } from 'nuxt-property-decorator'
 
   @Component({
+    meta: {
+      admin: true,
+    },
     head(this: HomePage): object {
       return {
         title: this.$t('home'),

@@ -1,6 +1,6 @@
 <template>
   <div class="EditStationPage">
-    <Stepper :step="step" :steps="3">
+    <Stepper :step="step" :steps="$auth.hasScope('admin') ? 3 : 2">
       <!-- Title -->
       <template #title>
         <v-app-bar flat color="rgba(0, 0, 0, 0)">
@@ -38,7 +38,7 @@
         </v-stepper-step>
       </template>
 
-      <template #step-3>
+      <template #step-3 v-if="$auth.hasScope('admin')">
         <v-stepper-step
           :rules="[() => !$v.user.$invalid]"
           editable
@@ -129,7 +129,7 @@
         </v-stepper-content>
       </template>
 
-      <template #content-3>
+      <template #content-3 v-if="$auth.hasScope('admin')">
         <v-stepper-content step="3">
           <v-card flat color="transparent" class="mb-4">
             <v-card-text class="pa-0 pt-2">

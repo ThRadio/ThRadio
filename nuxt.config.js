@@ -116,7 +116,7 @@ export default {
     transpile: ['vuelidate', 'vuex-module-decorators'],
   },
   router: {
-    middleware: ['completed', 'auth'],
+    middleware: ['completed', 'auth', 'station'],
   },
   auth: {
     strategies: {

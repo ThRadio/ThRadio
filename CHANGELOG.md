@@ -12,6 +12,10 @@ These are the changes that will be incorporated in the new version
 
 - Notification of available update implemented
 
+- Implemented user for station
+
+- Implemented user profile edit
+
 ## Bug Fixes
 
 - Fixed the statistics retrieval interval

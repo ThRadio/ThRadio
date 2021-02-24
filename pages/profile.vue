@@ -1,27 +1,47 @@
 <template>
-  <div class="ConfigPage">
+  <div class="ProfilePage">
     <v-card>
       <v-card-title>
-        <h4>{{ $t('configuration') }}</h4>
+        <h4>{{ $t('profile') }}</h4>
       </v-card-title>
       <v-card-text>
         <v-text-field
           v-model="name"
           dense
-          :label="$t('instance_name')"
+          :label="$t('display_name')"
           outlined
           block
           @input="$v.name.$touch()"
           @blur="$v.name.$touch()"
         ></v-text-field>
         <v-text-field
-          v-model="urlBase"
+          v-model="username"
           dense
-          :label="$t('url_base')"
+          :label="$t('username')"
+          outlined
+          :disabled="!$auth.hasScope('admin')"
+          block
+          @input="$v.username.$touch()"
+          @blur="$v.username.$touch()"
+        ></v-text-field>
+        <v-text-field
+          v-model="email"
+          dense
+          :label="$t('email')"
           outlined
           block
-          @input="$v.urlBase.$touch()"
-          @blur="$v.urlBase.$touch()"
+          @input="$v.email.$touch()"
+          @blur="$v.email.$touch()"
+        ></v-text-field>
+        <v-text-field
+          v-model="password"
+          dense
+          :label="$t('password')"
+          outlined
+          block
+          :messages="$t('msg_change_password')"
+          @input="$v.password.$touch()"
+          @blur="$v.password.$touch()"
         ></v-text-field>
         <v-btn
           :disabled="$v.$invalid"
@@ -58,19 +78,18 @@
   import { required } from 'vuelidate/lib/validators'
 
   @Component({
-    meta: {
-      admin: true,
-    },
-    head(this: ConfigPage): object {
+    head(this: ProfilePage): object {
       return {
-        title: this.$t('configuration'),
+        title: this.$t('profile'),
       }
     },
   })
-  export default class ConfigPage extends Vue {
+  export default class ProfilePage extends Vue {
     loading = false
     name: string = ''
-    urlBase: string = ''
+    username: string = ''
+    email: string = ''
+    password: string = ''
 
     snackbar = {
       show: false,
@@ -80,23 +99,29 @@
     @Validations()
     validations = {
       name: { required },
-      urlBase: { required },
+      username: { required },
+      email: {required},
+      password: {}
     }
 
     mounted() {
-      this.name = this.$store.getters.config.name
-      this.urlBase = this.$store.getters.config.url_base
+      const user: any = this.$auth?.user
+      this.name = user.name
+      this.username = user.username
+      this.email = user.email
     }
 
     async update() {
       try {
         this.loading = true
-        await this.$axios.$put('/api/app/config', {
+        await this.$axios.$put('/api/auth/me', {
           name: this.name,
-          url_base: this.urlBase,
+          username: this.username,
+          email: this.email,
+          password: this.password
         })
         this.loading = false
-        await this.$store.dispatch('getConfig')
+        await this.$auth.fetchUser()
         this.snackbar.show = true
         this.snackbar.text = this.$t('msg_success').toString()
       } catch (err) {

@@ -29,20 +29,22 @@
       <v-divider></v-divider>
 
       <v-list nav dense>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title v-text="$t(item.title)" />
-          </v-list-item-content>
-        </v-list-item>
+        <template v-for="(item, i) in items">
+          <v-list-item
+            v-if="$auth.hasScope(item.scope) || !item.scope"
+            :key="i"
+            :to="item.to"
+            router
+            exact
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title v-text="$t(item.title)" />
+            </v-list-item-content>
+          </v-list-item>
+        </template>
       </v-list>
     </v-navigation-drawer>
     <v-app-bar clipped-left fixed app>
@@ -70,11 +72,24 @@
       {
         icon: 'mdi-home',
         title: 'home',
+        scope: 'admin',
         to: this.localePath('/'),
+      },
+      {
+        icon: 'mdi-home',
+        title: 'home',
+        scope: 'station',
+        to: this.localePath(`/stations/${this.$auth?.user?.station}`),
+      },
+      {
+        icon: 'mdi-cog-outline',
+        title: 'profile',
+        to: this.localePath('/profile'),
       },
       {
         icon: 'mdi-cog-outline',
         title: 'configuration',
+        scope: 'admin',
         to: this.localePath('/config'),
       },
     ]
