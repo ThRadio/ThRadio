@@ -20,7 +20,7 @@ services:
 
   frontend:
     container_name: thradio_frontend
-    image: therhenals/thradio_frontend
+    image: therhenals/thradio_frontend:stable
     networks:
       - frontend
       - backend
@@ -32,7 +32,7 @@ services:
 
   backend:
     container_name: thradio_backend
-    image: therhenals/thradio_backend
+    image: therhenals/thradio_backend:stable
     volumes:
       - stations_data:/backend/stations
       - db_data:/backend/db

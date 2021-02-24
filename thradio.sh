@@ -227,12 +227,12 @@ install() {
 
   if [[ ! -f docker-compose.yaml ]]; then
     echo "Retrieving default docker-compose.yaml file..."
-    curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/docker-compose.sample.yaml -o docker-compose.yaml
+    curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/stable/docker-compose.sample.yaml -o docker-compose.yaml
   fi
 
   if [[ ! -f Caddyfile ]]; then
     echo "Retrieving default Caddyfile file..."
-    curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/Caddyfile.sample -o Caddyfile
+    curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/stable/Caddyfile.sample -o Caddyfile
   fi
 
   if [[ ! -f .env ]]; then
@@ -289,7 +289,7 @@ update() {
     echo "Default environment file loaded."
   fi
 
-  curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/docker-compose.sample.yaml -o docker-compose.new.yaml
+  curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/stable/docker-compose.sample.yaml -o docker-compose.new.yaml
 
   # Check for updated Docker Compose config.
   local COMPOSE_FILES_MATCH
@@ -318,7 +318,7 @@ update() {
     docker-compose down
   fi
 
-  curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/main/Caddyfile.sample -o Caddyfile.new
+  curl -fsSL https://raw.githubusercontent.com/ThRadio/ThRadio/stable/Caddyfile.sample -o Caddyfile.new
 
   # Check for updated Caddyfile.
   local CADDY_FILES_MATCH

@@ -4,6 +4,18 @@ These are the changes that will be incorporated in the new version
 
 ## New Features/Changes
 
+(There have been no new features in the next version since the last stable version.)
+
+## Bug Fixes
+
+(There have been no new features in the next version since the last stable version.)
+
+---
+
+## ThRadio 0.3 (Feb 24, 2021)
+
+## New Features/Changes
+
 - Created stepper component, this is responsive v-stepper
 
 - Implemented auth by username
