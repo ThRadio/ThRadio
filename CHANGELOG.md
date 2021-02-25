@@ -12,7 +12,15 @@ These are the changes that will be incorporated in the new version
 
 ---
 
-## ThRadio 0.3 (Feb 24, 2021)
+# ThRadio 0.3.1 (Feb 24, 2021)
+
+## Bug Fixes
+
+- Fix get, create and update station
+
+---
+
+# ThRadio 0.3 (Feb 24, 2021)
 
 ## New Features/Changes
 
