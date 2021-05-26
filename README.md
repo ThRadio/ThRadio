@@ -9,6 +9,7 @@ For this project the main language is Typescript all running on nodejs.
 ThRadio will always be available free of charge, but if you find the software useful and would like to support the project's lead developer, visit either of the links below. Your support is greatly appreciated.
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/therhenals)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FThRadio%2FThRadio.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FThRadio%2FThRadio?ref=badge_shield)
 
 [![buymeacoffee](https://img.buymeacoffee.com/button-api/?slug=therhenals&button_colour=FFDD00&font_colour=000000&font_family=Poppins&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/therhenals)
 
@@ -25,6 +26,9 @@ ThRadio is licensed under the Apache license, version 2.0. This project is free 
 <!-- ## Dev Setup
 
 ```bash
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FThRadio%2FThRadio.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FThRadio%2FThRadio?ref=badge_large)
+
 # install dependencies
 $ yarn install
 
