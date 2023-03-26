@@ -30,7 +30,7 @@
   "msg_password": "Please save this password",
   "msg_station_user": "Do you want to add a user to manage this station?",
   "msg_success": "Successfully update",
-  "msg_update": "New update available follow the instructions to update",
+  "msg_update": "New update available! Follow the instructions to update",
   "name": "Name",
   "not_found": "Not found",
   "optional": "Optional",
